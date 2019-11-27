@@ -43,7 +43,9 @@ jar {
     attributes 'Plugin-Class': "${pluginClass}",
           'Plugin-Id': "${pluginId}",
           'Plugin-Version': "${version}",
-          'Plugin-Provider': "${pluginProvider}"
+          'Plugin-Provider': "${pluginProvider}",
+          'Plugin-Namespace': "${pluginNamespace}",
+          'Plugin-Unsafe': "${pluginUnsafe}"
   }
 }
 

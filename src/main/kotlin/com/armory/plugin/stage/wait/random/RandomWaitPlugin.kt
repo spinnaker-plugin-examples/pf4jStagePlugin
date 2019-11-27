@@ -1,5 +1,6 @@
 package com.armory.plugin.stage.wait.random
 
+import com.netflix.spinnaker.kork.plugins.ConfigurableExtension
 import com.netflix.spinnaker.kork.plugins.SpinnakerExtension
 import org.slf4j.LoggerFactory
 import org.pf4j.Extension
@@ -9,7 +10,6 @@ import com.netflix.spinnaker.orca.api.SimpleStageStatus
 import com.netflix.spinnaker.orca.api.SimpleStageOutput
 import java.util.concurrent.TimeUnit
 import com.netflix.spinnaker.orca.api.SimpleStageInput
-import javax.annotation.PostConstruct
 import com.netflix.spinnaker.orca.api.SimpleStage
 import java.util.*
 
@@ -32,16 +32,14 @@ class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
  */
 @Extension
 @SpinnakerExtension(namespace = "armory", id = "randomWaitStage")
-class RandomWaitStage : SimpleStage<RandomWaitInput> {
+class RandomWaitStage : SimpleStage<RandomWaitInput>, ConfigurableExtension<RandomWaitConfig> {
+
     private val log = LoggerFactory.getLogger(SimpleStage::class.java)
 
-    /**
-     * This method is not required. For this example, this method is used to show service configuration
-     * values are available during startup.
-     */
-    @PostConstruct
-    fun init() {
-        log.error("mysuperduperplugin init")
+    private var configuration: RandomWaitConfig? = null
+
+    override fun setConfiguration(configuration: RandomWaitConfig?) {
+        this.configuration = configuration
     }
 
     /**
@@ -49,7 +47,7 @@ class RandomWaitStage : SimpleStage<RandomWaitInput> {
      * @return the name of the stage
      */
     override fun getName(): String {
-        return "randomWait"
+        return "randomWait (${configuration!!.defaultMaxWaitTime})"
     }
 
     /**
