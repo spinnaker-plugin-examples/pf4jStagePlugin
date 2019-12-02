@@ -6,9 +6,8 @@ Spinnaker Plugin (PF4J based) for random wait stage
 ```
 spinnaker:
   plugins:
-    RandomWaitPlugin:
-      enabled: true
     Armory.RandomWaitPlugin:
+      enabled: true
       extensions:
         armory.randomWaitStage:
           enabled: true
