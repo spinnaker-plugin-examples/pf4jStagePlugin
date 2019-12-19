@@ -25,7 +25,8 @@ dependencies {
   kapt(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}")
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
   compile group: 'org.springframework', name: 'spring-context', version: '5.2.1.RELEASE'
-  implementation (group: 'com.netflix.spinnaker.orca', name: 'orca-api', version: '7.64.0') {
+  compileOnly (group: 'com.netflix.spinnaker.kork', name: 'kork-plugins-api', version: '7.3.0')
+  implementation (group: 'com.netflix.spinnaker.orca', name: 'orca-api', version: '7.70.0') {
     exclude group: "org.slf4j"
   }
   implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
@@ -44,7 +45,6 @@ jar {
           'Plugin-Id': "${pluginId}",
           'Plugin-Version': "${version}",
           'Plugin-Provider': "${pluginProvider}",
-          'Plugin-Namespace': "${pluginNamespace}",
           'Plugin-Unsafe': "${pluginUnsafe}"
   }
 }

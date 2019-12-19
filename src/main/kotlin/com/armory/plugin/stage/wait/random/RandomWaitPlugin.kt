@@ -31,7 +31,7 @@ class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
  * your stage is available for use in Spinnaker.
  */
 @Extension
-@SpinnakerExtension(namespace = "armory", id = "randomWaitStage")
+@SpinnakerExtension(id = "armory.randomWaitStage")
 class RandomWaitStage : SimpleStage<RandomWaitInput>, ConfigurableExtension<RandomWaitConfig> {
 
     private val log = LoggerFactory.getLogger(SimpleStage::class.java)
