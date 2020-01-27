@@ -1,4 +1,4 @@
-package com.armory.plugin.stage.wait.random
+package io.armory.plugin.stage.wait.random
 
 import com.netflix.spinnaker.kork.plugins.ConfigurableExtension
 import com.netflix.spinnaker.kork.plugins.SpinnakerExtension
