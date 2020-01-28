@@ -5,12 +5,13 @@ Spinnaker Plugin (PF4J based) for random wait stage
 2) Configure Orca. Put the following in orca.yml.
 ```
 spinnaker:
-  plugins:
-    Armory.RandomWaitPlugin:
-      enabled: true
-      extensions:
-        armory.randomWaitStage:
-          enabled: true
-          config:
-            defaultMaxWaitTime: 60
+  extensibility:
+    plugins:
+      Armory.RandomWaitPlugin:
+        enabled: true
+        extensions:
+          armory.randomWaitStage:
+            enabled: true
+            config:
+              defaultMaxWaitTime: 60
 ```
