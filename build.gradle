@@ -59,7 +59,7 @@ tasks {
   }
 }
 
-task plugin(type: Jar) {
+task plugin(type: Zip) {
   baseName = "${pluginId}"
   into('classes') {
     with jar
