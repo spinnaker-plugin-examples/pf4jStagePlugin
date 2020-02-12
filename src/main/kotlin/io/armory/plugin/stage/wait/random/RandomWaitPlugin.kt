@@ -1,7 +1,7 @@
 package io.armory.plugin.stage.wait.random
 
-import com.netflix.spinnaker.kork.plugins.ConfigurableExtension
-import com.netflix.spinnaker.kork.plugins.SpinnakerExtension
+import com.netflix.spinnaker.kork.plugins.api.ConfigurableExtension
+import com.netflix.spinnaker.kork.plugins.api.SpinnakerExtension
 import org.slf4j.LoggerFactory
 import org.pf4j.Extension
 import org.pf4j.Plugin
