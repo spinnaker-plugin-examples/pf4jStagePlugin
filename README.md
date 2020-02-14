@@ -1,7 +1,9 @@
 Spinnaker Plugin (PF4J based) for random wait stage
 
+<h2>Usage</h2>
+
 1) Run `./gradlew assemblePlugin`
-2) Put the `/build/distributions/Armory.RandomWaitPlugin-X.X.X.zip` in the configured plugins location for Orca.
+2) Put the `/build/distributions/Armory.RandomWaitPlugin-X.X.X.zip` in the [configured plugins location for Orca](https://pf4j.org/doc/packaging.html).
 3) Configure Orca. Put the following in orca.yml.
 ```
 spinnaker:
@@ -15,6 +17,8 @@ spinnaker:
             config:
               defaultMaxWaitTime: 60
 ```
+
+Or use the [examplePluginRepository](https://github.com/spinnaker-plugin-examples/examplePluginRepository) to avoid copying the plugin `.zip` artifact.
 
 To debug the plugin inside Orca using IntelliJ Idea follow these steps:
 
