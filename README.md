@@ -2,9 +2,9 @@ Spinnaker Plugin (PF4J based) for random wait stage
 
 <h2>Usage</h2>
 
-1) Run `./gradlew assemblePlugin`
-2) Put the `/build/distributions/Armory.RandomWaitPlugin-X.X.X.zip` in the [configured plugins location for Orca](https://pf4j.org/doc/packaging.html).
-3) Configure Orca. Put the following in orca.yml.
+1) Run `./gradlew releaseBundle`
+2) Put the `/build/distributions/pf4jPluginWithoutExtensionPoint-X.zip` in the [configured plugins location for your service](https://pf4j.org/doc/packaging.html).
+3) Configure the Spinnaker service. Put the following in the service yml to enable the plugin and configure the extension.
 ```
 spinnaker:
   extensibility:
@@ -20,19 +20,11 @@ spinnaker:
 
 Or use the [examplePluginRepository](https://github.com/spinnaker-plugin-examples/examplePluginRepository) to avoid copying the plugin `.zip` artifact.
 
-To debug the plugin inside Orca using IntelliJ Idea follow these steps:
+To debug the plugin inside a Spinnaker service (like Orca) using IntelliJ Idea follow these steps:
 
-1) Create a `randomWaitStage.plugin-ref` file under `orca\plugins\` that looks like this with the correct path to the plugin project.
-```
-{
-  "pluginPath": "<plugin project path>",
-  "classesDirs": [
-    "<plugin project path>/build/classes/kotlin/main"],
-  "libsDirs": [
-    "<plugin project path>/build/jars"]
-}
-```
-2) Link the plugin project in IntelliJ (the `+` button in the Gradle tab and select the plugin build.gradle).
-3) Configure Orca the same way specified above.
-4) Create a new IntelliJ run configuration for Orca that has the VM option `-Dpf4j.mode=development` and does a `Build Project` before launch.
-5) Debug away...
+1) Run `./gradlew releaseBundle` in the plugin project.
+2) Copy the generated `.plugin-ref` file under `build` in the plugin project submodule for the service to the `plugins` directory under root in the Spinnaker service that will use the plugin .
+3) Link the plugin project to the service project in IntelliJ (from the service project use the `+` button in the Gradle tab and select the plugin build.gradle).
+4) Configure the Spinnaker service the same way specified above.
+5) Create a new IntelliJ run configuration for the service that has the VM option `-Dpf4j.mode=development` and does a `Build Project` before launch.
+6) Debug away...
