@@ -1,3 +1,5 @@
+![CI](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin/workflows/CI/badge.svg)
+
 Spinnaker Plugin (PF4J based) for random wait stage
 
 <h2>Usage</h2>
