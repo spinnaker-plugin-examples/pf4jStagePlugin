@@ -8,17 +8,16 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: ./gradlew test
-    - name: Build
-      run: ./gradlew releaseBundle
-    - name: Archive build artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: dist
-        path: build/distributions
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./gradlew test
+      - name: Build
+        run: ./gradlew releaseBundle
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: build/distributions
