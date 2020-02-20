@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Run tests
-      run: ./gradlew test
+      run: ./gradlew tes
     - name: Build
       run: ./gradlew releaseBundle
     - name: Archive build artifacts
