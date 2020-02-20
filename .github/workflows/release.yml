@@ -16,6 +16,9 @@ jobs:
         run: ./gradlew test
       - name: Build
         run: ./gradlew releaseBundle
+      - name: Get tag name
+        id: get_tag_name
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -33,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./build/distributions/pf4jStagePlugin-${GITHUB_REF#refs/*/}.zip
-          asset_name: pf4jStagePlugin-${GITHUB_REF#refs/*/}.zip
+          asset_path: ./build/distributions/pf4jStagePlugin-${{ steps.get_tag_name.outputs.VERSION }}.zip
+          asset_name: pf4jStagePlugin-${{ steps.get_tag_name.outputs.VERSION }}.zip
           asset_content_type: application/zip
     
