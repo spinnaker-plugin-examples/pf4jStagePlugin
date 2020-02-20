@@ -47,7 +47,7 @@ class RandomWaitStage : SimpleStage<RandomWaitInput>, ConfigurableExtension<Rand
      * @return the name of the stage
      */
     override fun getName(): String {
-        return "randomWait (${configuration!!.defaultMaxWaitTime})"
+        return "randomWait"
     }
 
     /**
