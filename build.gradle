@@ -24,7 +24,7 @@ spinnakerBundle {
 version = normalizedVersion()
 
 subprojects {
-  group = "io.armory.secrets.silly"
+  group = "io.armory.plugin.stage.wait.random"
   version = rootProject.version
 }
 
