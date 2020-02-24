@@ -12,7 +12,7 @@ class RandomWaitStageTest : JUnit5Minutests {
 
     fun tests() = rootContext {
         test("execute random wait stage") {
-            expectThat(RandomWaitStage().execute(SimpleStageInput(RandomWaitInput(1))))
+            expectThat(RandomWaitStage(RandomWaitConfig(30)).execute(SimpleStageInput(RandomWaitInput(1))))
                     .isEqualTo(
                             SimpleStageOutput<Output, Context>().apply {
                                 status = SimpleStageStatus.SUCCEEDED

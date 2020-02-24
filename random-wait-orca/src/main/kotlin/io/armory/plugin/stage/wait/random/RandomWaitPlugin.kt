@@ -1,7 +1,6 @@
 package io.armory.plugin.stage.wait.random
 
-import com.netflix.spinnaker.kork.plugins.api.ConfigurableExtension
-import com.netflix.spinnaker.kork.plugins.api.SpinnakerExtension
+import com.netflix.spinnaker.kork.plugins.api.ExtensionConfiguration
 import org.slf4j.LoggerFactory
 import org.pf4j.Extension
 import org.pf4j.Plugin
@@ -31,16 +30,9 @@ class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
  * your stage is available for use in Spinnaker.
  */
 @Extension
-@SpinnakerExtension(id = "armory.randomWaitStage")
-class RandomWaitStage : SimpleStage<RandomWaitInput>, ConfigurableExtension<RandomWaitConfig> {
+class RandomWaitStage(val configuration: RandomWaitConfig) : SimpleStage<RandomWaitInput> {
 
     private val log = LoggerFactory.getLogger(SimpleStage::class.java)
-
-    private var configuration: RandomWaitConfig? = null
-
-    override fun setConfiguration(configuration: RandomWaitConfig?) {
-        this.configuration = configuration
-    }
 
     /**
      * This sets the name of the stage
