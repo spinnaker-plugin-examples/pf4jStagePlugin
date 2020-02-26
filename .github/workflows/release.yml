@@ -10,16 +10,18 @@ jobs:
     name: Upload Release Asset
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: checkout code
         uses: actions/checkout@v2
-      - name: Run tests
+      - name: run tests
         run: ./gradlew test
       - name: Build
         run: ./gradlew releaseBundle
-      - name: Get tag name
-        id: get_tag_name
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      - name: Create release
+      - name: get project identifiers
+        id: get_project_info
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=PROJECT::pf4jStagePlugin
+      - name: create release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -29,14 +31,17 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Upload release asset
+      - name: upload release asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./build/distributions/pf4jStagePlugin-${{ steps.get_tag_name.outputs.VERSION }}.zip
-          asset_name: pf4jStagePlugin-${{ steps.get_tag_name.outputs.VERSION }}.zip
+          asset_path: ./build/distributions/${{ steps.get_project_info.outputs.PROJECT }}-${{ steps.get_project_info.outputs.VERSION }}.zip
+          asset_name: ${{ steps.get_project_info.outputs.PROJECT }}-${{ steps.get_project_info.VERSION }}.zip
           asset_content_type: application/zip
+      - name: add release to plugin repo
+          run: |
+            curl -XPOST -u "${{ secrets.USERNAME}}:${{secrets.TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/spinnaker-plugin-examples/examplePluginRepository/dispatches --data "{\"event_type\": \"onPluginRelease\", \"client_payload\": {\"org\": \"spinnaker-plugin-examples\", \"repo\": \"${{ steps.get_project_info.outputs.PROJECT }}\", \"released\": $(cat build/distributions/plugin-info.json)}}"  
     
