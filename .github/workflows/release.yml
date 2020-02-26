@@ -16,12 +16,11 @@ jobs:
         run: ./gradlew test
       - name: build
         run: ./gradlew releaseBundle
-      - name: get project name
-        id: get_project_name
-        run: echo ::set-output name=PROJECT::pf4jStagePlugin
-      - name: get project version
-        id: get_project_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: get project info
+        id: get_project_info
+        run: |
+          echo ::set-output name=PROJECT::$(basename `pwd`)
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: create release
         id: create_release
         uses: actions/create-release@v1
@@ -39,10 +38,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./build/distributions/${{ steps.get_project_name.outputs.PROJECT }}-${{ steps.get_project_version.outputs.VERSION }}.zip
-          asset_name: ${{ steps.get_project_name.outputs.PROJECT }}-${{ steps.get_project_version.outputs.VERSION }}.zip
+          asset_path: ./build/distributions/${{ steps.get_project_info.outputs.PROJECT }}-${{ steps.get_project_info.outputs.VERSION }}.zip
+          asset_name: ${{ steps.get_project_info.outputs.PROJECT }}-${{ steps.get_project_info.outputs.VERSION }}.zip
           asset_content_type: application/zip
       - name: add release to plugin repo
         run: |
-          curl -XPOST -u "${{ secrets.USERNAME }}:${{ secrets.TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/spinnaker-plugin-examples/examplePluginRepository/dispatches --data "{\"event_type\": \"onPluginRelease\", \"client_payload\": {\"org\": \"spinnaker-plugin-examples\", \"repo\": \"${{ steps.get_project_name.outputs.PROJECT }}\", \"released\": $(cat build/distributions/plugin-info.json)}}"  
+          curl -XPOST -u "${{ secrets.USERNAME }}:${{ secrets.TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/spinnaker-plugin-examples/examplePluginRepository/dispatches --data "{\"event_type\": \"onPluginRelease\", \"client_payload\": {\"org\": \"spinnaker-plugin-examples\", \"repo\": \"${{ steps.get_project_info.outputs.PROJECT }}\", \"released\": $(cat build/distributions/plugin-info.json)}}"  
     
