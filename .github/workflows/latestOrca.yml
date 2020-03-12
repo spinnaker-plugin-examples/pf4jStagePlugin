@@ -39,7 +39,7 @@ jobs:
           status: ${{ job.status }}
           author_name: Integration Test
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
       - name: commit gradle properties
