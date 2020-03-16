@@ -33,15 +33,6 @@ jobs:
         run: |
           sed -i -e 's/${{ steps.dependency_name.outputs.dependency }}Version=${{ steps.get_current.outputs.version }}/${{ steps.dependency_name.outputs.dependency }}Version=${{ steps.get_desired.outputs.version }}/g' gradle.properties
           ./gradlew test
-      - name: notify slack for build failure
-        uses: 8398a7/action-slack@v2
-        with:
-          status: ${{ job.status }}
-          author_name: Integration Test
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
       - name: commit gradle properties
         if: (steps.get_current.outputs.version != steps.get_desired.outputs.version) && success()
         run: |
