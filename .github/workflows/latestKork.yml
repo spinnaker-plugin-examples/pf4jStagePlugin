@@ -33,6 +33,10 @@ jobs:
         run: |
           sed -i -e 's/${{ steps.dependency_name.outputs.dependency }}Version=${{ steps.get_current.outputs.version }}/${{ steps.dependency_name.outputs.dependency }}Version=${{ steps.get_desired.outputs.version }}/g' gradle.properties
           ./gradlew test
+      - name: notify build failure
+        if: failure()
+        run: |
+          curl -XPOST -u "${{ secrets.USERNAME }}:${{ secrets.TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/spinnaker-plugin-examples/examplePluginRepository/dispatches --data "{\"event_type\": \"onPluginDepUpdateFailure\", \"client_payload\": {\"workflow\": \"${GITHUB_WORKFLOW}\", \"repo\": \"${GITHUB_REPOSITORY}\", \"dependency\": \"${{ steps.dependency_name.outputs.dependency }}\", \"version\": \"${{ steps.get_desired.outputs.version }}\"}}"
       - name: commit gradle properties
         if: (steps.get_current.outputs.version != steps.get_desired.outputs.version) && success()
         run: |
