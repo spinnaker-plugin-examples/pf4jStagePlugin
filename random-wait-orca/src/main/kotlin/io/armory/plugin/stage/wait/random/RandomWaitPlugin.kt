@@ -1,15 +1,14 @@
 package io.armory.plugin.stage.wait.random
 
-import com.netflix.spinnaker.kork.plugins.api.ExtensionConfiguration
+import com.netflix.spinnaker.orca.api.simplestage.SimpleStage
+import com.netflix.spinnaker.orca.api.simplestage.SimpleStageInput
+import com.netflix.spinnaker.orca.api.simplestage.SimpleStageOutput
+import com.netflix.spinnaker.orca.api.simplestage.SimpleStageStatus
 import org.slf4j.LoggerFactory
 import org.pf4j.Extension
 import org.pf4j.Plugin
 import org.pf4j.PluginWrapper
-import com.netflix.spinnaker.orca.api.SimpleStageStatus
-import com.netflix.spinnaker.orca.api.SimpleStageOutput
 import java.util.concurrent.TimeUnit
-import com.netflix.spinnaker.orca.api.SimpleStageInput
-import com.netflix.spinnaker.orca.api.SimpleStage
 import java.util.*
 
 

@@ -1,8 +1,8 @@
 package io.armory.plugin.stage.wait.random
 
-import com.netflix.spinnaker.orca.api.SimpleStageInput
-import com.netflix.spinnaker.orca.api.SimpleStageOutput
-import com.netflix.spinnaker.orca.api.SimpleStageStatus
+import com.netflix.spinnaker.orca.api.simplestage.SimpleStageInput
+import com.netflix.spinnaker.orca.api.simplestage.SimpleStageOutput
+import com.netflix.spinnaker.orca.api.simplestage.SimpleStageStatus
 import dev.minutest.junit.JUnit5Minutests
 import dev.minutest.rootContext
 import strikt.api.expectThat
