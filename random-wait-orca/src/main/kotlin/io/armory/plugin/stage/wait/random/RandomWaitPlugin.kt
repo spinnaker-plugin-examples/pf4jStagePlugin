@@ -26,8 +26,9 @@ class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
 }
 
 /**
- * Example stage that implements the Orca API Stage interface. By implementing Stage,
+ * This stage implements the Orca API Stage interface. By implementing SimpleStage,
  * your stage is available for use in Spinnaker.
+ * @see com.netflix.spinnaker.orca.api.SimpleStage
  */
 @Extension
 class RandomWaitStage(val configuration: RandomWaitConfig) : SimpleStage<RandomWaitInput> {
@@ -43,14 +44,14 @@ class RandomWaitStage(val configuration: RandomWaitConfig) : SimpleStage<RandomW
     }
 
     /**
-     * This is what gets ran when the stage is executed. It takes in an object that you create. That
-     * object contains fields that one wishes to pull out of the pipeline context. This gives us a
-     * strongly typed object that you have full control over. The function returns a SimpleStageOutput object.
+     * This is called when the stage is executed. It takes in an object that you create. That
+     * object contains fields that you want to pull out of the pipeline context. This gives you a
+     * strongly typed object that you have full control over.
      * The SimpleStageOutput class contains the status of the stage and any stage outputs that should be
      * put back into the pipeline context.
      * @param stageInput<RandomWaitInput>
-     * @return the status of the stage and any context that should be passed to the pipeline context
-    </RandomWaitInput> */
+     * @return SimpleStageOutput; the status of the stage and any context that should be passed to the pipeline context
+     */
     override fun execute(stageInput: SimpleStageInput<RandomWaitInput>): SimpleStageOutput<*, *> {
         val rand = Random()
         val maxWaitTime = stageInput.value.maxWaitTime
