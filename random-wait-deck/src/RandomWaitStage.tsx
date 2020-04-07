@@ -12,6 +12,14 @@ export function RandomWaitDetails(props: IExecutionDetailsSectionProps & { title
     )
 }
 
+/*
+Define Spinnaker Stages with IStageTypeConfig.
+ Required options: https://github.com/spinnaker/deck/blob/abac63ce5c88b809fcf5ed1509136fe96489a051/app/scripts/modules/core/src/domain/IStageTypeConfig.ts
+- label -> The name of the Stage
+- description -> Long form that describes what the Stage actually does
+- key -> A unique name for the Stage
+- component -> The rendered React component
+ */
 export const randomWaitStage: IStageTypeConfig = {
     key: 'randomWait',
     label: `Random Wait`,
@@ -25,6 +33,13 @@ function setMaxWaitTime(event: React.SyntheticEvent, props: IStageConfigProps) {
     props.updateStageField({'maxWaitTime': target.value});
 }
 
+/*
+ IStageConfigProps defines properties passed to all Spinnaker Stages.
+ See IStageConfigProps.ts (https://github.com/spinnaker/deck/blob/master/app/scripts/modules/core/src/pipeline/config/stages/common/IStageConfigProps.ts) for a complete list of properties.
+ Pass a JSON object to the `updateStageField` method to add the `maxWaitTime` to the Stage.
+
+ This method returns JSX (https://reactjs.org/docs/introducing-jsx.html) that gets displayed in the Spinnaker UI.
+ */
 function RandomWaitStage(props: IStageConfigProps) {
     return (
         <div>
