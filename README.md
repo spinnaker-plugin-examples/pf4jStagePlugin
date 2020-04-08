@@ -7,9 +7,12 @@ This is for demo only and not meant to be used in a production environment.
 
 # Dependencies
 
-* [Gradle](https://gradle.org/) and [Yarn](https://classic.yarnpkg.com/en/) for building the plugin locally
-* Orca branch `release-1.19.x` and IntelliJ IDEA for local testing
-* Spinnaker v1.19.4+ and Halyard 1.34+ for deploying the plugin
+[Gradle](https://gradle.org/) and [Yarn](https://classic.yarnpkg.com/en/) for building the plugin locally
+ 
+| Plugin Version  | Orca Version |
+|:----------- | :--------- |
+| 1.0.17  |  Orca master (8 April 2020) |
+| 1.1.x  | Orca master (8 April 2020) | 
 
 # Usage
 
