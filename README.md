@@ -11,6 +11,7 @@ This is for demo only and not meant to be used in a production environment.
  
 | Plugin Version  | Orca Version |
 |:----------- | :--------- |
+| 1.0.16 | Spinnaker 1.19.4 |
 | 1.0.17  |  Orca master (8 April 2020) |
 | 1.1.x  | Orca master (8 April 2020) | 
 
