@@ -16,8 +16,8 @@ apply plugin: "io.spinnaker.plugin.bundler"
 
 spinnakerBundle {
   pluginId = "Armory.RandomWaitPlugin"
-  description = "An example of a PF4J based plugin, that provides a new stage."
-  provider = "https://github.com/claymccoy"
+  description = "An example of a PF4J-based plugin that provides a custom pipeline stage."
+  provider = "https://github.com/spinnaker-plugin-examples"
   version = rootProject.version
 }
 

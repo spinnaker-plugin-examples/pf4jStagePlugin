@@ -20,6 +20,10 @@ export default [
   }
 ];
 
+/*
+Pulls dependencies from Spinnaker. The `libraries` constant is a list of libraries that make the plugin work correctly.
+Items in this list must be from the shared libraries (https://github.com/spinnaker/deck/blob/master/app/scripts/modules/core/src/plugins/sharedLibraries.ts#L32) exposed to plugin creators.
+ */
 function spinnakerSharedLibraries() {
   const libraries = ['lodash', 'react', 'react-dom', '@spinnaker/core'];
 
