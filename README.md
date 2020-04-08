@@ -21,7 +21,7 @@ This is for demo only and not meant to be used in a production environment.
 
 1) Run `./gradlew releaseBundle`
 2) Put the `/build/distributions/<project>-<version>.zip` into the [configured plugins location for your service](https://pf4j.org/doc/packaging.html).
-3) Configure the Spinnaker service. Put the following in the service yml to enable the plugin and configure the extension.:
+3) Configure the Spinnaker service. Put the following in the service yml to enable the plugin and configure the extension:
 
 ```
 spinnaker:
