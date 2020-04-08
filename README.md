@@ -56,8 +56,15 @@ The `random-weight-orca` backend consists of five classes in the `io.armory.plug
 * `RandomWeightInput.kt`: a data class that contains the key-values pairs that we care about from the Context map
 * `RandomWaitPlugin.kt`: this is the plugin's main class; implements `SimpleStage`
 
-See the code comments for detailed explanations.
+[Video walkthrough](https://youtu.be/u9NVlG58NYo)
 
 ## random-weight-deck
 
-This UI component is written in React.
+This UI component is written in React and uses the [rollup.js](https://rollupjs.org/guide/en/#plugins-overview) plugin library.
+
+* `rollup.config.js`:  plugin configuration
+* `plugins.json`: defines dependencies
+* `RandomWaitStage.tsx`: defines the custom pipeline stage; renders UI output
+* `RandomWaitStageIndex.ts`: exports the name and custom stages
+
+[Video walkthrough](https://youtu.be/u9NVlG58NYo)
