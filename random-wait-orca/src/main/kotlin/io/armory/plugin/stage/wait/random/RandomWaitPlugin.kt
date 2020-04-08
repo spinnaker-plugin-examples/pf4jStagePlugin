@@ -26,8 +26,7 @@ class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
 }
 
 /**
- * This stage implements the Orca API Stage interface. By implementing SimpleStage,
- * your stage is available for use in Spinnaker.
+ * By implementing SimpleStage, your stage is available for use in Spinnaker.
  * @see com.netflix.spinnaker.orca.api.SimpleStage
  */
 @Extension

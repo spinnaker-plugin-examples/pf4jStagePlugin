@@ -17,19 +17,20 @@ Define Spinnaker Stages with IStageTypeConfig.
  Required options: https://github.com/spinnaker/deck/blob/abac63ce5c88b809fcf5ed1509136fe96489a051/app/scripts/modules/core/src/domain/IStageTypeConfig.ts
 - label -> The name of the Stage
 - description -> Long form that describes what the Stage actually does
-- key -> A unique name for the Stage
+- key -> A unique name for the Stage in the UI; ties to Orca backend
 - component -> The rendered React component
  */
 export const randomWaitStage: IStageTypeConfig = {
     key: 'randomWait',
     label: `Random Wait`,
-    description: 'Stage that waits a random amount of time up to the max inputted',
+    description: 'Stage that waits a random amount of time up to the max input',
     component: RandomWaitStage, // stage config
     executionDetailsSections: [RandomWaitDetails, ExecutionDetailsTasks],
 };
 
 function setMaxWaitTime(event: React.SyntheticEvent, props: IStageConfigProps) {
     let target = event.target as HTMLInputElement;
+    // this is how we tell the backend plugin piece what info to pass to Orca
     props.updateStageField({'maxWaitTime': target.value});
 }
 
