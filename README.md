@@ -53,5 +53,7 @@ To debug the `random-wait-orca`  server component inside a Spinnaker service (li
 
 # Video walkthroughs
 
-* `random-wait-orca` [video walkthrough](https://youtu.be/u9NVlG58NYo)
-* `random-wait-deck` [video walkthrough](https://youtu.be/u9NVlG58NYo)
+* `Pluging into the UI` [video walkthrough](https://youtu.be/u9NVlG58NYo)
+* `Pluging into Spinnaker Services` [video walkthrough](https://drive.google.com/open?id=1JPkXG5NnXowb1OElAFj2VjnpvUDA-Wyi)
+* `Plugin Build and Release` [video walkthrough](https://drive.google.com/file/d/16DIo812nRyan2CDCTuZvsgN4D9yl0Dur/view?usp=sharing)
+* `Plugin Delivery` [video walkthrough](https://drive.google.com/file/d/1k-MUgmwWFdh6YiozmFw5Y2hGSm84UeTw/view?usp=sharing)
