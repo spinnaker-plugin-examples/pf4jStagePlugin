@@ -9,15 +9,12 @@ The plugin consists of a `random-wait-orca` [Kotlin](https://kotlinlang.org/docs
 
 This is for demo only and not meant to be used in a production environment.
 
-# Dependencies
-
-[Gradle](https://gradle.org/) and [Yarn](https://classic.yarnpkg.com/en/) for building the plugin locally
+# Version Compatibility
  
-| Plugin Version  | Orca Version |
+| Plugin  | Spinnaker Platform |
 |:----------- | :--------- |
-| 1.0.16 | Spinnaker 1.19.4 |
-| 1.0.17  |  Spin 1.19.x |
-| 1.1.x  | current master | 
+| 1.0.x  |  1.19.x |
+| 1.1.x  | 1.20.x |
 
 # Usage
 
