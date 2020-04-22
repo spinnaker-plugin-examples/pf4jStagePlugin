@@ -47,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./random-wait-deck/build/dist/RandomWaitStageIndex.js
+          asset_path: ./random-wait-deck/build/dist/index.js
           asset_name: RandomWaitStageIndex.js
           asset_content_type: text/javascript
       - name: add release to plugin repo
