@@ -6,7 +6,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 
 export default [
   {
-    input: 'src/RandomWaitStageIndex.ts',
+    input: 'src/index.ts',
     plugins: [
       nodeResolve(),
       commonjs(),
