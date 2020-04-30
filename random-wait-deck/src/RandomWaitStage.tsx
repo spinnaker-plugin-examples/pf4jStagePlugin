@@ -1,57 +1,88 @@
 import React from 'react';
+
 import {
-  ExecutionDetailsSection, ExecutionDetailsTasks,
-  IExecutionDetailsSectionProps, IStageConfigProps, IStageTypeConfig
+  ExecutionDetailsSection,
+  ExecutionDetailsTasks,
+  FormikFormField,
+  FormikStageConfig,
+  FormValidator,
+  HelpField,
+  IExecutionDetailsSectionProps,
+  IStage,
+  IStageConfigProps,
+  IStageTypeConfig,
+  NumberInput,
+  Validators,
 } from '@spinnaker/core';
 
-export function RandomWaitDetails(props: IExecutionDetailsSectionProps & { title: string }) {
-    return (
-        <ExecutionDetailsSection name={props.name} current={props.current}>
-            <div><p>{props.stage.outputs.message}</p></div>
-        </ExecutionDetailsSection>
-    )
+import './RandomWaitStage.less';
+
+export function RandomWaitStageExecutionDetails(props: IExecutionDetailsSectionProps) {
+  return (
+    <ExecutionDetailsSection name={props.name} current={props.current}>
+      <div>
+        <p>Waited {props.stage.outputs.timeToWait} second(s)</p>
+      </div>
+    </ExecutionDetailsSection>
+  );
 }
 
 /*
-Define Spinnaker Stages with IStageTypeConfig.
- Required options: https://github.com/spinnaker/deck/blob/abac63ce5c88b809fcf5ed1509136fe96489a051/app/scripts/modules/core/src/domain/IStageTypeConfig.ts
-- label -> The name of the Stage
-- description -> Long form that describes what the Stage actually does
-- key -> A unique name for the Stage in the UI; ties to Orca backend
-- component -> The rendered React component
- */
-export const randomWaitStage: IStageTypeConfig = {
-    key: 'randomWait',
-    label: `Random Wait`,
-    description: 'Stage that waits a random amount of time up to the max input',
-    component: RandomWaitStage, // stage config
-    executionDetailsSections: [RandomWaitDetails, ExecutionDetailsTasks],
-};
+  IStageConfigProps defines properties passed to all Spinnaker Stages.
+  See IStageConfigProps.ts (https://github.com/spinnaker/deck/blob/master/app/scripts/modules/core/src/pipeline/config/stages/common/IStageConfigProps.ts) for a complete list of properties.
+  Pass a JSON object to the `updateStageField` method to add the `maxWaitTime` to the Stage.
 
-function setMaxWaitTime(event: React.SyntheticEvent, props: IStageConfigProps) {
-    let target = event.target as HTMLInputElement;
-    // this is how we tell the backend plugin piece what info to pass to Orca
-    props.updateStageField({'maxWaitTime': target.value});
+  This method returns JSX (https://reactjs.org/docs/introducing-jsx.html) that gets displayed in the Spinnaker UI.
+ */
+export function RandomWaitStageConfig(props: IStageConfigProps) {
+  return (
+    <div className="RandomWaitStageConfig">
+      <FormikStageConfig
+        {...props}
+        validate={validate}
+        onChange={props.updateStage}
+        render={(props) => (
+          <FormikFormField
+            name="maxWaitTime"
+            label="Max Time To Wait"
+            help={<HelpField content="The maximum time, in seconds, that this stage should wait before continuing." />}
+            input={(props) => <NumberInput {...props} />}
+          />
+        )}
+      />
+    </div>
+  );
 }
 
-/*
- IStageConfigProps defines properties passed to all Spinnaker Stages.
- See IStageConfigProps.ts (https://github.com/spinnaker/deck/blob/master/app/scripts/modules/core/src/pipeline/config/stages/common/IStageConfigProps.ts) for a complete list of properties.
- Pass a JSON object to the `updateStageField` method to add the `maxWaitTime` to the Stage.
+export function validate(stageConfig: IStage) {
+  const validator = new FormValidator(stageConfig);
 
- This method returns JSX (https://reactjs.org/docs/introducing-jsx.html) that gets displayed in the Spinnaker UI.
- */
-function RandomWaitStage(props: IStageConfigProps) {
-    return (
-        <div>
-            <label>
-                Max Time To Wait
-                <input value={props.stage.maxWaitTime} onChange={(e) => setMaxWaitTime(e, props)} id="maxWaitTime" />
-            </label>
-        </div>
-    );
+  validator
+    .field('maxWaitTime')
+    .required()
+    .withValidators((value, label) => (value < 0 ? `${label} must be non-negative` : undefined));
+
+  return validator.validateForm();
 }
 
-export namespace RandomWaitDetails {
+export namespace RandomWaitStageExecutionDetails {
   export const title = 'randomWait';
 }
+
+/*
+  Define Spinnaker Stages with IStageTypeConfig.
+  Required options: https://github.com/spinnaker/deck/master/app/scripts/modules/core/src/domain/IStageTypeConfig.ts
+  - label -> The name of the Stage
+  - description -> Long form that describes what the Stage actually does
+  - key -> A unique name for the Stage in the UI; ties to Orca backend
+  - component -> The rendered React component
+  - validateFn -> A validation function for the stage config form.
+ */
+export const randomWaitStage: IStageTypeConfig = {
+  key: 'randomWait',
+  label: `Random Wait`,
+  description: 'Stage that waits a random amount of time up to the max input',
+  component: RandomWaitStageConfig, // stage config
+  executionDetailsSections: [RandomWaitStageExecutionDetails, ExecutionDetailsTasks],
+  validateFn: validate,
+};
