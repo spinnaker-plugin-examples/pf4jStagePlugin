@@ -1,6 +1,6 @@
-import { randomWaitStage  } from './RandomWaitStage'
+import { IDeckPlugin } from '@spinnaker/core';
+import { randomWaitStage } from './RandomWaitStage';
 
-export const plugin = {
-  name: 'randomWait',
-  stages: [randomWaitStage]
+export const plugin: IDeckPlugin = {
+  stages: [randomWaitStage],
 };
