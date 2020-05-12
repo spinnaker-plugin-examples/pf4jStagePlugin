@@ -6,6 +6,7 @@ import {
   FormikFormField,
   FormikStageConfig,
   FormValidator,
+  HelpContentsRegistry,
   HelpField,
   IExecutionDetailsSectionProps,
   IStage,
@@ -34,7 +35,7 @@ export function RandomWaitStageExecutionDetails(props: IExecutionDetailsSectionP
 
   This method returns JSX (https://reactjs.org/docs/introducing-jsx.html) that gets displayed in the Spinnaker UI.
  */
-export function RandomWaitStageConfig(props: IStageConfigProps) {
+function RandomWaitStageConfig(props: IStageConfigProps) {
   return (
     <div className="RandomWaitStageConfig">
       <FormikStageConfig
@@ -45,7 +46,7 @@ export function RandomWaitStageConfig(props: IStageConfigProps) {
           <FormikFormField
             name="maxWaitTime"
             label="Max Time To Wait"
-            help={<HelpField content="The maximum time, in seconds, that this stage should wait before continuing." />}
+            help={<HelpField id="armory.randomWaitStage.maxWaitTime" />}
             input={(props) => <NumberInput {...props} />}
           />
         )}
@@ -54,7 +55,22 @@ export function RandomWaitStageConfig(props: IStageConfigProps) {
   );
 }
 
-export function validate(stageConfig: IStage) {
+/*
+  This is a contrived example of how to use an `initialize` function to hook into arbitrary Deck services. 
+  This `initialize` function provides the help field text for the `RandomWaitStageConfig` stage form defined above.
+
+  You can hook into any service exported by the `@spinnaker/core` NPM module, e.g.:
+   - CloudProviderRegistry
+   - DeploymentStrategyRegistry
+
+  When you use a registry, you are diving into Deck's implementation to add functionality. 
+  These registries and their methods may change without warning.
+*/
+export const initialize = () => {
+  HelpContentsRegistry.register('armory.randomWaitStage.maxWaitTime', 'The maximum time, in seconds, that this stage should wait before continuing.');
+};
+
+function validate(stageConfig: IStage) {
   const validator = new FormValidator(stageConfig);
 
   validator
