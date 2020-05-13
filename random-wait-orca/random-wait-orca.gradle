@@ -25,6 +25,7 @@ repositories {
 spinnakerPlugin {
   serviceName = "orca"
   pluginClass = "io.armory.plugin.stage.wait.random.RandomWaitPlugin"
+  requires="orca>=8.0.0"
 }
 
 dependencies {
