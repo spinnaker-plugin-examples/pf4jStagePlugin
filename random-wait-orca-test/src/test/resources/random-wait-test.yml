@@ -1,0 +1,38 @@
+front50:
+  enabled: false
+
+igor:
+  enabled: false
+
+bakery:
+  enabled: false
+
+echo:
+  enabled: false
+
+monitor:
+  activeExecutions:
+    redis: false
+
+executionRepository:
+  redis:
+    enabled: false
+
+spring:
+  application:
+    name: orca
+
+spinnaker:
+  extensibility:
+    plugins-root-path: build/plugins
+    plugins:
+      Armory.RandomWaitPlugin.Enabled:
+        enabled: true
+      Armory.RandomWaitPlugin.Disabled:
+        enabled: false
+      Armory.RandomWaitPlugin.NotSupported:
+        enabled: true
+
+services:
+  fiat:
+    baseUrl: https://fiat.net

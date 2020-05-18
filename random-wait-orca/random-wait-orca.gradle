@@ -1,11 +1,9 @@
 buildscript {
-  ext.kotlin_version = '1.3.50'
-
   repositories {
     mavenCentral()
   }
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
   }
 }
 apply plugin: "io.spinnaker.plugin.service-extension"
@@ -30,7 +28,7 @@ spinnakerPlugin {
 
 dependencies {
   compileOnly(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}")
-  compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
   compileOnly (group: 'com.netflix.spinnaker.kork', name: 'kork-plugins-api', version: "${korkVersion}")
   compileOnly (group: 'com.netflix.spinnaker.orca', name: 'orca-api', version: "${orcaVersion}")
 
