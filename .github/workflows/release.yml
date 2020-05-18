@@ -81,5 +81,6 @@ jobs:
 
       - name: push image to registry
         run: |
-          docker login -u _json_key -p "${{ secrets.GCP_KEY }}" https://gcr.io
+          echo "$GCP_KEY" > key.json
+          docker login -u _json_key -p "$(cat key.json)" https://gcr.io
           docker push gcr.io/cloud-armory/${{ steps.get_project_info.outputs.PROJECT_KEBAB }}:${{ steps.get_project_info.outputs.VERSION }}
