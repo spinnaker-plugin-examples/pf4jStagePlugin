@@ -26,7 +26,7 @@ import strikt.assertions.isEqualTo
  * This test demonstrates that the RandomWaitPlugin can be loaded by Orca
  * and that RandomWaitStage's StageDefinitionBuilder can be retrieved at runtime.
  */
-class RandomWaitStageTest : PluginsTck<OrcaPluginsFixture>() {
+class RandomWaitStageTck : PluginsTck<OrcaPluginsFixture>() {
 
   fun tests() = rootContext<OrcaPluginsFixture> {
     context("a running Orca instance") {
