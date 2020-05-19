@@ -45,6 +45,14 @@ compileTestKotlin {
   }
 }
 
+// See the comments in this PR regarding the equivalent test filter
+// in the orca-plugins-test package: https://github.com/spinnaker/orca/pull/3579
+test {
+  filter {
+    includeTestsMatching "io.armory.plugin.stage.wait.random.RandomWaitStageTckTest"
+  }
+}
+
 tasks.withType(Test) {
   useJUnitPlatform()
 }

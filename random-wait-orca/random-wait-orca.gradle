@@ -3,6 +3,7 @@ buildscript {
     mavenCentral()
   }
 }
+
 apply plugin: "io.spinnaker.plugin.service-extension"
 apply plugin: "maven-publish"
 apply plugin: "kotlin"
@@ -29,7 +30,7 @@ dependencies {
   compileOnly (group: 'com.netflix.spinnaker.kork', name: 'kork-plugins-api', version: "${korkVersion}")
   compileOnly (group: 'com.netflix.spinnaker.orca', name: 'orca-api', version: "${orcaVersion}")
 
-  kapt "org.pf4j:pf4j:$pf4jVersion"
+  kapt(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}")
 
   testImplementation (group: 'com.netflix.spinnaker.orca', name: 'orca-api', version: "${orcaVersion}")
 
