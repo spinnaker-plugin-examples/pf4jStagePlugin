@@ -12,12 +12,6 @@ apply plugin: "kotlin-kapt"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-repositories {
-  mavenCentral()
-  jcenter()
-  maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
-}
-
 spinnakerPlugin {
   serviceName = "orca"
   pluginClass = "io.armory.plugin.stage.wait.random.RandomWaitPlugin"

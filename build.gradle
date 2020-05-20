@@ -14,8 +14,13 @@ plugins {
   id("org.jetbrains.kotlin.kapt").version("$kotlinVersion")
 }
 
-repositories {
-  mavenCentral()
+allprojects {
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+    maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
+  }
 }
 
 spinnakerBundle {

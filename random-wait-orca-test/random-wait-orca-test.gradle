@@ -13,17 +13,12 @@ apply plugin: "kotlin-spring"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-repositories {
-  mavenCentral()
-  jcenter()
-  maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
-}
-
 dependencies {
   testImplementation project(":random-wait-orca")
   testImplementation "com.netflix.spinnaker.orca:orca-api:${orcaVersion}"
   testImplementation "com.netflix.spinnaker.orca:orca-web:${orcaVersion}"
   testImplementation "com.netflix.spinnaker.orca:orca-queue:${orcaVersion}"
+  testImplementation "com.netflix.spinnaker.orca:orca-api-tck:${orcaVersion}"
   testImplementation "com.netflix.spinnaker.orca:orca-clouddriver:${orcaVersion}"
   testImplementation "com.netflix.spinnaker.kork:kork-plugins-tck:${korkVersion}"
   testImplementation "com.netflix.spinnaker.keiko:keiko-mem:3.6.2"
