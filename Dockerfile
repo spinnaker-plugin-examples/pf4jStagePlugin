@@ -1,3 +1,3 @@
-FROM scratch
+FROM alpine
 
 COPY build/distributions/ /plugins
