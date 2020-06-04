@@ -14,8 +14,12 @@ targetCompatibility = 1.8
 
 repositories {
   mavenCentral()
+  mavenLocal()
   jcenter()
   maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
+
+  // TODO: don't use Google product release versions.
+  maven { url "https://spinnaker-releases.bintray.com/jars" }
 }
 
 spinnakerPlugin {
@@ -25,15 +29,15 @@ spinnakerPlugin {
 }
 
 dependencies {
-  compileOnly(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}")
+  implementation platform("io.spinnaker.gradle:plugin-dependencies:1.20.0")
+
+  compileOnly(group: 'org.pf4j', name: 'pf4j')
+  compileOnly (group: 'com.netflix.spinnaker.kork', name: 'kork-plugins-api')
+  compileOnly (group: 'com.netflix.spinnaker.orca', name: 'orca-api')
+
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-  compileOnly (group: 'com.netflix.spinnaker.kork', name: 'kork-plugins-api', version: "${korkVersion}")
-  compileOnly (group: 'com.netflix.spinnaker.orca', name: 'orca-api', version: "${orcaVersion}")
 
-  kapt(group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}")
-
-  testImplementation (group: 'com.netflix.spinnaker.orca', name: 'orca-api', version: "${orcaVersion}")
-
+  testImplementation (group: 'com.netflix.spinnaker.orca', name: 'orca-api')
   testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
   testImplementation group: 'io.strikt', name: 'strikt-core', version: '0.22.1'
   testImplementation group: 'dev.minutest', name: 'minutest', version: '1.10.0'
