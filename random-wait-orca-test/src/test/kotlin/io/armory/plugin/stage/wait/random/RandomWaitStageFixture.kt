@@ -19,26 +19,19 @@ package io.armory.plugin.stage.wait.random
 import com.netflix.spinnaker.kork.plugins.SpinnakerPluginManager
 import com.netflix.spinnaker.kork.plugins.internal.PluginJar
 import com.netflix.spinnaker.kork.plugins.tck.PluginsTckFixture
-import com.netflix.spinnaker.orca.Main
 import com.netflix.spinnaker.orca.StageResolver
-import com.netflix.spinnaker.orca.notifications.NotificationClusterLock
-import com.netflix.spinnaker.orca.pipeline.persistence.ExecutionRepository
-import com.netflix.spinnaker.q.Queue
-import com.netflix.spinnaker.q.memory.InMemoryQueue
-import com.netflix.spinnaker.q.metrics.EventPublisher
+import com.netflix.spinnaker.orca.api.test.OrcaFixture
 import java.io.File
-import java.time.Clock
-import java.time.Duration
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Primary
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
 
-class OrcaPluginsFixture : PluginsTckFixture, OrcaTestService() {
+@TestPropertySource(properties = [
+  "spinnaker.extensibility.plugins.Armory.RandomWaitEnabledPlugin.enabled=true",
+  "spinnaker.extensibility.plugins.Armory.RandomWaitDisabledPlugin.disabled=true",
+  "spinnaker.extensibility.plugins.Armory.RandomWaitNotSupportedPlugin.enabled=true",
+  "spinnaker.extensibility.plugins-root-path=build/plugins"
+])
+class OrcaPluginsFixture : PluginsTckFixture, OrcaFixture() {
 
   final override val plugins = File("build/plugins")
   final override val enabledPlugin: PluginJar
@@ -64,33 +57,11 @@ class OrcaPluginsFixture : PluginsTckFixture, OrcaTestService() {
   @Autowired
   lateinit var stageResolver: StageResolver
 
-  @MockBean
-  var executionRepository: ExecutionRepository? = null
-
-  @MockBean
-  var notificationClusterLock: NotificationClusterLock? = null
-
   init {
     plugins.delete()
     plugins.mkdir()
-    enabledPlugin = buildPlugin("Armory.RandomWaitPlugin.Enabled", ">=1.0.0")
-    disabledPlugin = buildPlugin("Armory.RandomWaitPlugin.Disabled", ">=1.0.0")
-    versionNotSupportedPlugin = buildPlugin("Armory.RandomWaitPlugin.NotSupported", ">=2.0.0")
-  }
-}
-
-@SpringBootTest(classes = [Main::class])
-@ContextConfiguration(classes = [PluginTestConfiguration::class])
-@TestPropertySource(properties = ["spring.config.location=classpath:random-wait-test.yml"])
-abstract class OrcaTestService
-
-@TestConfiguration
-internal class PluginTestConfiguration {
-
-  @Bean
-  @Primary
-  fun queue(clock: Clock?, publisher: EventPublisher?): Queue {
-    return InMemoryQueue(
-        clock!!, Duration.ofMinutes(1), emptyList(), false, publisher!!)
+    enabledPlugin = buildPlugin("Armory.RandomWaitEnabledPlugin", ">=1.0.0")
+    disabledPlugin = buildPlugin("Armory.RandomWaitDisabledPlugin", ">=1.0.0")
+    versionNotSupportedPlugin = buildPlugin("Armory.RandomWaitNotSupportedPlugin", ">=1000.0.0")
   }
 }
