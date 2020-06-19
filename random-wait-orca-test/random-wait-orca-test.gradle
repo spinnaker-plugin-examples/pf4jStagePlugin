@@ -23,9 +23,7 @@ dependencies {
   testImplementation project(":random-wait-orca")
   testImplementation "com.netflix.spinnaker.orca:orca-api:${orcaVersion}"
   testImplementation "com.netflix.spinnaker.orca:orca-api-tck:${orcaVersion}"
-  testImplementation "com.netflix.spinnaker.orca:orca-web:${orcaVersion}"
   testImplementation "com.netflix.spinnaker.orca:orca-queue:${orcaVersion}"
-  testImplementation "com.netflix.spinnaker.orca:orca-clouddriver:${orcaVersion}"
   testImplementation "com.netflix.spinnaker.kork:kork-plugins-tck:${korkVersion}"
 
   testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
