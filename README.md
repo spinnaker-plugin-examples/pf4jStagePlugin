@@ -2,14 +2,8 @@
 ![Latest Kork](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin/workflows/Latest%20Kork/badge.svg?branch=master)
 ![Latest Orca](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin/workflows/Latest%20Orca/badge.svg?branch=master)
 
-Spinnaker Plugin (PF4J-based) that is a custom pipeline stage.
-The [pf4jStagePlugin](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin) creates a custom pipeline stage that waits a random number of seconds before signaling success.
-<<<<<<< HEAD
-This plugin implements the [SimpleStage](https://github.com/spinnaker/orca/blob/ab89a0d7f847205ccd62e70f8a714040a8621ee7/orca-api/src/main/java/com/netflix/spinnaker/orca/api/SimpleStage.java) PF4J extension point in Orca.
-=======
-This plugin implements the [SimpleStage](https://github.com/spinnaker/orca/blob/master/orca-api/src/main/java/com/netflix/spinnaker/orca/api/simplestage/SimpleStage.java) PF4J extension point in Orca.
->>>>>>> 36744e8... Incorporate review feedback
-The plugin consists of a `random-wait-orca` [Kotlin](https://kotlinlang.org/docs/reference/) server component and a `random-wait-deck` [React](https://reactjs.org/) UI component that uses the [rollup.js](https://rollupjs.org/guide/en/#plugins-overview) plugin library.
+
+The [pf4jStagePlugin](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin), also called the RandomWait plugin, creates a custom pipeline stage that waits a random number of seconds before signaling success.
 
 This is for demo only and not meant to be used in a production environment.
 
@@ -63,6 +57,8 @@ To debug the `random-wait-orca`  server component inside a Spinnaker service (li
 
 # Architecture
 
+The plugin consists of a `random-wait-orca` [Kotlin](https://kotlinlang.org/docs/reference/) server component and a `random-wait-deck` [React](https://reactjs.org/) UI component that uses the [rollup.js](https://rollupjs.org/guide/en/#plugins-overview) plugin library.
+
 ## `random-wait-orca`
 
 This component implements the [SimpleStage](https://github.com/spinnaker/orca/blob/master/orca-api/src/main/java/com/netflix/spinnaker/orca/api/simplestage/SimpleStage.java) PF4J extension point in Orca and  consists of five classes in the `io.armory.plugin.state.wait.random` package:
@@ -84,7 +80,7 @@ Prior to v1.1.4, this component used the [`rollup.js`](https://rollupjs.org/guid
 * `rollup.config.js`: configuration for building the JavaScript application
 * `package.json`: defines dependencies
 * `RandomWaitStage.tsx`: defines the custom pipeline stage; renders UI output
-* `RandomWaitStageIndex.ts`: exports the name and custom stages
+* `index.ts`: exports the name and custom stages
 
 The code was refactored in v1.1.5 to use the new Deck UI SDK. `rollup.config.js`
 now points to the config defined by the UI SDK. It's mostly not necessary to
