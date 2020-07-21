@@ -35,6 +35,10 @@ spinnaker:
 
 Or use the [examplePluginRepository](https://github.com/spinnaker-plugin-examples/examplePluginRepository) to avoid copying the plugin `.zip` artifact.
 
+## Deployment on Spinnaker 1.20.6+
+
+See the [Plugin Users Guide](https://spinnaker.io/guides/user/plugins/) and the [pf4jStagePlugin Deployment Example](https://spinnaker.io/guides/user/plugins/deploy-example/).
+
 # Debugging
 
 To debug the `random-wait-orca`  server component inside a Spinnaker service (like Orca) using IntelliJ Idea follow these steps:
@@ -45,6 +49,8 @@ To debug the `random-wait-orca`  server component inside a Spinnaker service (li
 4) Configure the Spinnaker service the same way specified above.
 5) Create a new IntelliJ run configuration for the service that has the VM option `-Dpf4j.mode=development` and does a `Build Project` before launch.
 6) Debug away...
+
+See the [Test a Pipeline Stage Plugin](https://spinnaker.io/guides/developer/plugin-creators/deck-plugin/) guide for a detailed walkthrough of setting up a plugin local testing environment on your workstation.
 
 # Videos
 
