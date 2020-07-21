@@ -48,7 +48,8 @@ To debug the `random-wait-orca`  server component inside a Spinnaker service (li
 
 # Videos
 
-* [Intro to Spinnaker Plugins](https://youtu.be/HtkXeC8a38Y), 2020 Spinnaker Gardening Days
+* [Intro to Spinnaker Plugins](https://youtu.be/HtkXeC8a38Y), 2020 April Spinnaker Gardening Days
+* [Plugins Training Workshop](https://youtu.be/oEHPvO88ROA), 2020 July Spinnaker Gardening Days
 * [How to build a PLUGIN: Building the frontend for a Spinnaker-native custom stage](https://youtu.be/u9NVlG58NYo)
 * [How to build a PLUGIN: Creating a Spinnaker-native custom stage](https://youtu.be/b7BmMY1kR10)
 * [Backend Plugin Development](https://drive.google.com/open?id=1JPkXG5NnXowb1OElAFj2VjnpvUDA-Wyi)
