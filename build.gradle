@@ -12,6 +12,7 @@ plugins {
   id("com.palantir.git-version").version("0.12.2")
   id("org.jetbrains.kotlin.jvm").version("$kotlinVersion")
   id("org.jetbrains.kotlin.kapt").version("$kotlinVersion")
+  id("com.diffplug.spotless").version("5.1.0")
 }
 
 repositories {
@@ -30,6 +31,19 @@ version = normalizedVersion()
 subprojects {
   group = "io.armory.plugin.stage.wait.random"
   version = rootProject.version
+
+  if (name != "random-wait-deck") {
+    apply plugin: "com.diffplug.spotless"
+    spotless {
+      kotlin {
+        ktlint().userData([
+          disabled_rules          : "no-wildcard-imports",
+          indent_size             : "2",
+          continuation_indent_size: "2",
+        ])
+      }
+    }
+  }
 }
 
 String normalizedVersion() {

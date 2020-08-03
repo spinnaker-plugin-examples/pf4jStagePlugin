@@ -4,13 +4,12 @@ import com.netflix.spinnaker.orca.api.simplestage.SimpleStage
 import com.netflix.spinnaker.orca.api.simplestage.SimpleStageInput
 import com.netflix.spinnaker.orca.api.simplestage.SimpleStageOutput
 import com.netflix.spinnaker.orca.api.simplestage.SimpleStageStatus
-import org.slf4j.LoggerFactory
+import java.util.*
+import java.util.concurrent.TimeUnit
 import org.pf4j.Extension
 import org.pf4j.Plugin
 import org.pf4j.PluginWrapper
-import java.util.concurrent.TimeUnit
-import java.util.*
-
+import org.slf4j.LoggerFactory
 
 class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
     private val logger = LoggerFactory.getLogger(RandomWaitPlugin::class.java)
