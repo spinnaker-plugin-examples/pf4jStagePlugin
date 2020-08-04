@@ -16,9 +16,13 @@
 
 package io.armory.plugin.stage.wait.random
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.netflix.spinnaker.kork.plugins.tck.PluginsTck
 import com.netflix.spinnaker.kork.plugins.tck.serviceFixture
 import dev.minutest.rootContext
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 import strikt.api.expect
 import strikt.assertions.isEqualTo
 
@@ -44,6 +48,45 @@ class RandomWaitStageTckTest : PluginsTck<OrcaPluginsFixture>() {
           that(stageDefinitionBuilder.type).isEqualTo("simple")
         }
       }
+
+      test("RandomWaitStage can be executed as a stage within a live pipeline execution") {
+        val response = mockMvc.post("/orchestrate") {
+          contentType = MediaType.APPLICATION_JSON
+          content = mapper.writeValueAsString(mapOf(
+            "application" to "pf4j-stage-plugin",
+            "stages" to listOf(mapOf(
+              "refId" to "1",
+              "type" to "randomWait",
+              "maxWaitTime" to 1
+            ))
+          ))
+        }.andReturn().response
+
+        expect {
+          that(response.status).isEqualTo(200)
+        }
+
+        val ref = mapper.readValue<ExecutionRef>(response.contentAsString).ref
+
+        var execution: Execution
+        do {
+          execution = mapper.readValue(mockMvc.get(ref).andReturn().response.contentAsString)
+        } while (execution.status != "SUCCEEDED")
+
+        expect {
+          that(execution)
+            .get { stages.first() }
+            .and {
+              get { type }.isEqualTo("randomWait")
+              get { status }.isEqualTo("SUCCEEDED")
+              get { context.maxWaitTime }.isEqualTo(1)
+            }
+        }
+      }
     }
   }
+
+  data class ExecutionRef(val ref: String)
+  data class Execution(val status: String, val stages: List<Stage>)
+  data class Stage(val status: String, val context: Context, val type: String)
 }
