@@ -16,6 +16,8 @@
 
 package io.armory.plugin.stage.wait.random
 
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.netflix.spinnaker.kork.plugins.SpinnakerPluginManager
 import com.netflix.spinnaker.kork.plugins.internal.PluginJar
 import com.netflix.spinnaker.kork.plugins.tck.PluginsTckFixture
@@ -23,7 +25,9 @@ import com.netflix.spinnaker.orca.StageResolver
 import com.netflix.spinnaker.orca.api.test.OrcaFixture
 import java.io.File
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.test.context.TestPropertySource
+import org.springframework.test.web.servlet.MockMvc
 
 @TestPropertySource(properties = [
   "spinnaker.extensibility.plugins.Armory.RandomWaitEnabledPlugin.enabled=true",
@@ -31,6 +35,7 @@ import org.springframework.test.context.TestPropertySource
   "spinnaker.extensibility.plugins.Armory.RandomWaitNotSupportedPlugin.enabled=true",
   "spinnaker.extensibility.plugins-root-path=build/plugins"
 ])
+@AutoConfigureMockMvc
 class OrcaPluginsFixture : PluginsTckFixture, OrcaFixture() {
 
   final override val plugins = File("build/plugins")
@@ -56,6 +61,11 @@ class OrcaPluginsFixture : PluginsTckFixture, OrcaFixture() {
 
   @Autowired
   lateinit var stageResolver: StageResolver
+
+  @Autowired
+  lateinit var mockMvc: MockMvc
+
+  val mapper = jacksonObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
   init {
     plugins.delete()

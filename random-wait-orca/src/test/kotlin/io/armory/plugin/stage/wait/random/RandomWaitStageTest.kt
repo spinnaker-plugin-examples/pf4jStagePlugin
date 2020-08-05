@@ -10,16 +10,16 @@ import strikt.assertions.isEqualTo
 
 class RandomWaitStageTest : JUnit5Minutests {
 
-    fun tests() = rootContext {
-        test("execute random wait stage") {
-            expectThat(RandomWaitStage(RandomWaitConfig(30)).execute(SimpleStageInput(RandomWaitInput(1))))
-                    .isEqualTo(
-                            SimpleStageOutput<Output, Context>().apply {
-                                status = SimpleStageStatus.SUCCEEDED
-                                output = Output(0)
-                                context = Context(1)
-                            }
-                    )
-        }
+  fun tests() = rootContext {
+    test("execute random wait stage") {
+      expectThat(RandomWaitStage(RandomWaitConfig(30)).execute(SimpleStageInput(RandomWaitInput(1))))
+        .isEqualTo(
+          SimpleStageOutput<Output, Context>().apply {
+            status = SimpleStageStatus.SUCCEEDED
+            output = Output(0)
+            context = Context(1)
+          }
+        )
     }
+  }
 }
