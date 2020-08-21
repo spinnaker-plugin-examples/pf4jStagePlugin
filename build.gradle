@@ -4,6 +4,7 @@ buildscript {
   }
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+    classpath "org.yaml:snakeyaml:1.19"
   }
 }
 
