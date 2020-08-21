@@ -93,3 +93,13 @@ The code was refactored in v1.1.5 to use the new Deck UI SDK. `rollup.config.js`
 now points to the config defined by the UI SDK. It's mostly not necessary to
 define your own build config. This is also true of `tsconfig.json`. If you use
 the UI SDK, you no longer define how your TypeScript should be compiled.
+
+# Build 
+
+The GitHub actions in this repository run integration tests that demonstrate 
+that the plugin can be loaded across a set of Spinnaker versions (1.20.x,
+1.21.x).
+
+If these tests fail because the plugin can no longer run inside a given
+Spinnaker version, please create a new release of this plugin with a minor
+version bump and update the compatibiity matrix at the top of this `README`.

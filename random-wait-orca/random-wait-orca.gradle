@@ -1,3 +1,5 @@
+import org.yaml.snakeyaml.Yaml
+
 buildscript {
   repositories {
     mavenCentral()
@@ -20,6 +22,9 @@ repositories {
   mavenCentral()
   jcenter()
   maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
+
+  // Used for testing against the Google product releases.
+  maven { url "https://spinnaker-releases.bintray.com/jars" }
 }
 
 spinnakerPlugin {
@@ -35,10 +40,13 @@ dependencies {
   compileOnly "com.netflix.spinnaker.orca:orca-api:${orcaVersion}"
   kapt "org.pf4j:pf4j:${pf4jVersion}"
 
-  testImplementation "com.netflix.spinnaker.orca:orca-api:${orcaVersion}"
-  testImplementation "com.netflix.spinnaker.orca:orca-api-tck:${orcaVersion}"
-  testImplementation "com.netflix.spinnaker.orca:orca-queue:${orcaVersion}"
-  testImplementation "com.netflix.spinnaker.kork:kork-plugins-tck:${korkVersion}"
+  withOrcaVersion {
+    testImplementation(platform("com.netflix.spinnaker.orca:orca-bom:${it}"))
+  }
+  testImplementation "com.netflix.spinnaker.orca:orca-api"
+  testImplementation "com.netflix.spinnaker.orca:orca-api-tck"
+  testImplementation "com.netflix.spinnaker.orca:orca-queue"
+  testImplementation "com.netflix.spinnaker.kork:kork-plugins-tck"
 
   testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
   testImplementation "io.strikt:strikt-core:0.22.1"
@@ -61,4 +69,13 @@ compileTestKotlin {
 
 tasks.withType(Test) {
   useJUnitPlatform()
+}
+
+def withOrcaVersion(Closure<String> cb) {
+  if (hasProperty("testSpinnakerVersion")) {
+    def bom = new URL("https://storage.googleapis.com/halconfig/bom/${property("testSpinnakerVersion")}.yml").text
+    cb(new Yaml().load(bom).services.orca.version)
+  } else {
+    cb(property("orcaVersion"))
+  }
 }
