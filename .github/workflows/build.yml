@@ -15,6 +15,7 @@ jobs:
         spinnakerVersion:
           - 1.20.7
           - 1.21.4
+          - 1.22.0
     steps:
       - name: checkout code
         uses: actions/checkout@v2
