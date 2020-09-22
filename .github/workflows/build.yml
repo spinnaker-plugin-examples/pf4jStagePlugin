@@ -10,17 +10,11 @@ jobs:
   build:
     name: Build Plugin
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        spinnakerVersion:
-          - 1.20.7
-          - 1.21.4
-          - 1.22.0
     steps:
       - name: checkout code
         uses: actions/checkout@v2
       - name: run tests
-        run: ./gradlew test -PtestSpinnakerVersion=${{ matrix.spinnakerVersion }}
+        run: ./gradlew test compatibilityTest
       - name: build
         run: ./gradlew releaseBundle
       - name: archive build artifacts

@@ -10,6 +10,7 @@ buildscript {
 }
 
 apply plugin: "io.spinnaker.plugin.service-extension"
+apply plugin: "io.spinnaker.plugin.compatibility-test-runner"
 apply plugin: "maven-publish"
 apply plugin: "kotlin"
 apply plugin: "kotlin-kapt"
@@ -40,9 +41,7 @@ dependencies {
   compileOnly "com.netflix.spinnaker.orca:orca-api:${orcaVersion}"
   kapt "org.pf4j:pf4j:${pf4jVersion}"
 
-  withOrcaVersion {
-    testImplementation(platform("com.netflix.spinnaker.orca:orca-bom:${it}"))
-  }
+  testImplementation(platform("com.netflix.spinnaker.orca:orca-bom:${orcaVersion}"))
   testImplementation "com.netflix.spinnaker.orca:orca-api"
   testImplementation "com.netflix.spinnaker.orca:orca-api-tck"
   testImplementation "com.netflix.spinnaker.orca:orca-queue"
@@ -69,13 +68,4 @@ compileTestKotlin {
 
 tasks.withType(Test) {
   useJUnitPlatform()
-}
-
-def withOrcaVersion(Closure<String> cb) {
-  if (hasProperty("testSpinnakerVersion")) {
-    def bom = new URL("https://storage.googleapis.com/halconfig/bom/${property("testSpinnakerVersion")}.yml").text
-    cb(new Yaml().load(bom).services.orca.version)
-  } else {
-    cb(property("orcaVersion"))
-  }
 }
