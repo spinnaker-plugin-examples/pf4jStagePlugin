@@ -25,6 +25,9 @@ spinnakerBundle {
   description = "An example of a PF4J-based plugin that provides a custom pipeline stage."
   provider = "https://github.com/spinnaker-plugin-examples"
   version = rootProject.version
+  compatibility {
+    spinnaker = ["1.20.7", "1.21.4", "1.22.0"]
+  }
 }
 
 version = normalizedVersion()
@@ -56,3 +59,4 @@ String normalizedVersion() {
     return normalized
   }
 }
+

@@ -8,12 +8,6 @@ jobs:
   test_latest:
     name: Test Latest
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        spinnakerVersion:
-          - 1.20.7
-          - 1.21.4
-          - 1.22.0
     steps:
       - name: checkout code
         uses: actions/checkout@v2
@@ -38,7 +32,7 @@ jobs:
         if: steps.get_current.outputs.version != steps.get_desired.outputs.version
         run: |
           sed -i -e 's/${{ steps.dependency_name.outputs.dependency }}Version=${{ steps.get_current.outputs.version }}/${{ steps.dependency_name.outputs.dependency }}Version=${{ steps.get_desired.outputs.version }}/g' gradle.properties
-          ./gradlew test -PtestSpinnakerVersion=${{ matrix.spinnakerVersion }}
+          ./gradlew test compatibilityTest
       - name: notify build failure
         if: failure()
         run: |
