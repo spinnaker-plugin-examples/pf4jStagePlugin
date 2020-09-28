@@ -1,25 +1,31 @@
 package io.armory.plugin.stage.wait.random
 
-import com.netflix.spinnaker.orca.api.simplestage.SimpleStageInput
-import com.netflix.spinnaker.orca.api.simplestage.SimpleStageOutput
-import com.netflix.spinnaker.orca.api.simplestage.SimpleStageStatus
+import com.netflix.spinnaker.orca.api.pipeline.models.ExecutionStatus
+import com.netflix.spinnaker.orca.api.test.stage
 import dev.minutest.junit.JUnit5Minutests
 import dev.minutest.rootContext
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
+import strikt.assertions.isNotNull
 
 class RandomWaitStageTest : JUnit5Minutests {
 
   fun tests() = rootContext {
     test("execute random wait stage") {
-      expectThat(RandomWaitStage(RandomWaitConfig(30)).execute(SimpleStageInput(RandomWaitInput(1))))
-        .isEqualTo(
-          SimpleStageOutput<Output, Context>().apply {
-            status = SimpleStageStatus.SUCCEEDED
-            output = Output(0)
-            context = Context(1)
-          }
+
+      val stage = stage {
+        type = "randomWait"
+        context = mapOf(
+          "maxWaitTime" to 1
         )
+      }
+
+      val task = RandomWaitStage.RandomWaitTask(RandomWaitConfig(0))
+      expectThat(task.execute(stage)) {
+        get { status }.isEqualTo(ExecutionStatus.SUCCEEDED)
+        get { context["maxWaitTime"] }.isNotNull().isEqualTo(1)
+        get { outputs["timeToWait"] }.isNotNull()
+      }
     }
   }
 }

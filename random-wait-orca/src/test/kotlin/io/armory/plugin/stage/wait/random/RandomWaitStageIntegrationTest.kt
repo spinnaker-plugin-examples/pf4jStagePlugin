@@ -17,8 +17,8 @@
 package io.armory.plugin.stage.wait.random
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.netflix.spinnaker.kork.plugins.tck.PluginsTck
-import com.netflix.spinnaker.kork.plugins.tck.serviceFixture
+import com.netflix.spinnaker.orca.api.test.orcaFixture
+import dev.minutest.junit.JUnit5Minutests
 import dev.minutest.rootContext
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
@@ -30,22 +30,20 @@ import strikt.assertions.isEqualTo
  * This test demonstrates that the RandomWaitPlugin can be loaded by Orca
  * and that RandomWaitStage's StageDefinitionBuilder can be retrieved at runtime.
  */
-class RandomWaitStageIntegrationTest : PluginsTck<OrcaPluginsFixture>() {
+class RandomWaitStageIntegrationTest : JUnit5Minutests {
 
   fun tests() = rootContext<OrcaPluginsFixture> {
     context("a running Orca instance") {
-      serviceFixture {
+      orcaFixture {
         OrcaPluginsFixture()
       }
-
-      defaultPluginTests()
 
       test("RandomWaitStage extension is resolved to the correct type") {
         val stageDefinitionBuilder = stageResolver.getStageDefinitionBuilder(
             RandomWaitStage::class.java.simpleName, "randomWait")
 
         expect {
-          that(stageDefinitionBuilder.type).isEqualTo("simple")
+          that(stageDefinitionBuilder.type).isEqualTo("randomWait")
         }
       }
 
@@ -88,5 +86,5 @@ class RandomWaitStageIntegrationTest : PluginsTck<OrcaPluginsFixture>() {
 
   data class ExecutionRef(val ref: String)
   data class Execution(val status: String, val stages: List<Stage>)
-  data class Stage(val status: String, val context: Context, val type: String)
+  data class Stage(val status: String, val context: RandomWaitContext, val type: String)
 }

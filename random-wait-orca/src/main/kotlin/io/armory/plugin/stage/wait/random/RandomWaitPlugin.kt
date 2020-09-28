@@ -1,9 +1,11 @@
 package io.armory.plugin.stage.wait.random
 
-import com.netflix.spinnaker.orca.api.simplestage.SimpleStage
-import com.netflix.spinnaker.orca.api.simplestage.SimpleStageInput
-import com.netflix.spinnaker.orca.api.simplestage.SimpleStageOutput
-import com.netflix.spinnaker.orca.api.simplestage.SimpleStageStatus
+import com.netflix.spinnaker.orca.api.pipeline.Task
+import com.netflix.spinnaker.orca.api.pipeline.TaskResult
+import com.netflix.spinnaker.orca.api.pipeline.graph.StageDefinitionBuilder
+import com.netflix.spinnaker.orca.api.pipeline.graph.TaskNode
+import com.netflix.spinnaker.orca.api.pipeline.models.ExecutionStatus
+import com.netflix.spinnaker.orca.api.pipeline.models.StageExecution
 import java.util.*
 import java.util.concurrent.TimeUnit
 import org.pf4j.Extension
@@ -12,62 +14,61 @@ import org.pf4j.PluginWrapper
 import org.slf4j.LoggerFactory
 
 class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
-    private val logger = LoggerFactory.getLogger(RandomWaitPlugin::class.java)
+  private val logger = LoggerFactory.getLogger(RandomWaitPlugin::class.java)
 
-    override fun start() {
-        logger.info("RandomWaitPlugin.start()")
-    }
+  override fun start() {
+    logger.info("RandomWaitPlugin.start()")
+  }
 
-    override fun stop() {
-        logger.info("RandomWaitPlugin.stop()")
-    }
+  override fun stop() {
+    logger.info("RandomWaitPlugin.stop()")
+  }
 }
 
 /**
- * By implementing SimpleStage, your stage is available for use in Spinnaker.
- * @see com.netflix.spinnaker.orca.api.SimpleStage
+ * By implementing StageDefinitionBuilder, your stage is available for use in Spinnaker.
+ * @see com.netflix.spinnaker.orca.api.StageDefinitionBuilder
  */
 @Extension
-class RandomWaitStage(val configuration: RandomWaitConfig) : SimpleStage<RandomWaitInput> {
+class RandomWaitStage : StageDefinitionBuilder {
 
-    private val log = LoggerFactory.getLogger(SimpleStage::class.java)
+  private val log = LoggerFactory.getLogger(RandomWaitStage::class.java)
+
+  /**
+   * This function describes the sequence of substeps, or "tasks" that comprise this
+   * stage. The task graph is generally linear though there are some looping mechanisms.
+   *
+   * This method is called just before a stage is executed. The task graph can be generated
+   * programmatically based on the stage's context.
+   */
+  override fun taskGraph(stage: StageExecution, builder: TaskNode.Builder) {
+    builder.withTask("randomWait", RandomWaitTask::class.java)
+  }
+
+  @Extension
+  class RandomWaitTask(private val config: RandomWaitConfig) : Task {
+
+    private val log = LoggerFactory.getLogger(RandomWaitTask::class.java)
 
     /**
-     * This sets the name of the stage
-     * @return the name of the stage
+     * This method is called when the task is executed.
      */
-    override fun getName(): String {
-        return "randomWait"
+    override fun execute(stage: StageExecution): TaskResult {
+      val context = stage.mapTo(RandomWaitContext::class.java)
+      val rand = Random()
+      val maxWaitTime = context.maxWaitTime ?: config.defaultMaxWaitTime
+      val timeToWait = rand.nextInt(maxWaitTime)
+
+      try {
+        TimeUnit.SECONDS.sleep(timeToWait.toLong())
+      } catch (e: Exception) {
+        log.error("{}", e)
+      }
+
+      return TaskResult.builder(ExecutionStatus.SUCCEEDED)
+        .context(mutableMapOf("maxWaitTime" to maxWaitTime))
+        .outputs(mutableMapOf("timeToWait" to timeToWait))
+        .build()
     }
-
-    /**
-     * This is called when the stage is executed. It takes in an object that you create. That
-     * object contains fields that you want to pull out of the pipeline context. This gives you a
-     * strongly typed object that you have full control over.
-     * The SimpleStageOutput class contains the status of the stage and any stage outputs that should be
-     * put back into the pipeline context.
-     * @param stageInput<RandomWaitInput>
-     * @return SimpleStageOutput; the status of the stage and any context that should be passed to the pipeline context
-     */
-    override fun execute(stageInput: SimpleStageInput<RandomWaitInput>): SimpleStageOutput<*, *> {
-        val rand = Random()
-        val maxWaitTime = stageInput.value.maxWaitTime
-        val timeToWait = rand.nextInt(maxWaitTime)
-
-        try {
-            TimeUnit.SECONDS.sleep(timeToWait.toLong())
-        } catch (e: Exception) {
-            log.error("{}", e)
-        }
-
-        val stageOutput = SimpleStageOutput<Output, Context>()
-        val output = Output(timeToWait)
-        val context = Context(maxWaitTime)
-
-        stageOutput.setOutput(output)
-        stageOutput.setContext(context)
-        stageOutput.setStatus(SimpleStageStatus.SUCCEEDED)
-
-        return stageOutput
-    }
+  }
 }

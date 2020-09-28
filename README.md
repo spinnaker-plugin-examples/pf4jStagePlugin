@@ -68,15 +68,13 @@ The plugin consists of a `random-wait-orca` [Kotlin](https://kotlinlang.org/docs
 
 ## `random-wait-orca`
 
-This component implements the [SimpleStage](https://github.com/spinnaker/orca/blob/master/orca-api/src/main/java/com/netflix/spinnaker/orca/api/simplestage/SimpleStage.java) PF4J extension point in Orca and  consists of five classes in the `io.armory.plugin.state.wait.random` package:
+This component implements the [StageDefinitionBuilder](https://github.com/spinnaker/orca/blob/master/orca-api/src/main/java/com/netflix/spinnaker/orca/api/pipeline/graph/StageDefinitionBuilder.java) PF4J extension point in Orca and consists of three classes in the `io.armory.plugin.state.wait.random` package:
 
-* `Context.kt`: a data class that stores the `maxWaitTime` value; `SimpleStage` uses `Context`
-* `Output.kt`: a data class that stores the `timeToWait` getValue; this data is returned to the extension point implementation and can be used in downstream stages
-* `RandomWaitConfig.kt`: a data class with the `@ExtensionConfiguration` tag; key-value pairs in this class map to the plugin's configuration
-* `RandomWaitInput.kt`: a data class that contains the key-value pairs that we care about from the Context map
-* `RandomWaitPlugin.kt`: this is the plugin's main class; implements `SimpleStage`
+* `RandomWaitContext.kt`: a data class that stores the `maxWaitTime` value
+* `RandomWaitConfig.kt`: a data class with the `@PluginConfiguration` tag; key-value pairs in this class map to the plugin's configuration
+* `RandomWaitPlugin.kt`: this is the plugin's main class; implements `StageDefinitionBuilder`
 
-When adding a stage to a pipeline in the Spinnaker UI, the user can select this `Armory.RandomWaitPlugin` stage from the **Type** dropdown list. You enter a `maxWaitTime`, which is deserialized in `RandomWaitInput`.
+When adding a stage to a pipeline in the Spinnaker UI, the user can select this `Armory.RandomWaitPlugin` stage from the **Type** dropdown list. You enter a `maxWaitTime`, which is deserialized in `RandomWaitContext`.
 
 Watch [How to build a PLUGIN: Creating a Spinnaker-native custom stage](https://youtu.be/b7BmMY1kR10) and read [code comments](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin/tree/master/random-wait-orca/src/main/kotlin/io/armory/plugin/stage/wait/random) for more information.
 
