@@ -26,11 +26,8 @@ spinnaker:
     plugins:
       Armory.RandomWaitPlugin:
         enabled: true
-        extensions:
-          armory.randomWaitStage:
-            enabled: true
-            config:
-              defaultMaxWaitTime: 60
+        config:
+          defaultMaxWaitTime: 60
 ```
 
 Or use the [examplePluginRepository](https://github.com/spinnaker-plugin-examples/examplePluginRepository) to avoid copying the plugin `.zip` artifact.
