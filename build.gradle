@@ -26,7 +26,12 @@ spinnakerBundle {
   provider = "https://github.com/spinnaker-plugin-examples"
   version = rootProject.version
   compatibility {
-    spinnaker = ["1.21.4", "1.22.0", "latest"]
+    spinnaker {
+      test "1.21.4"
+      test "1.22.0"
+      test "latest"
+      test(version: "nightly", required: false)
+    }
   }
 }
 
