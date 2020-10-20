@@ -3,7 +3,6 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     classpath "org.yaml:snakeyaml:1.19"
   }
 }
@@ -11,8 +10,6 @@ buildscript {
 plugins {
   id("io.spinnaker.plugin.bundler").version("$spinnakerGradleVersion")
   id("com.palantir.git-version").version("0.12.2")
-  id("org.jetbrains.kotlin.jvm").version("$kotlinVersion")
-  id("org.jetbrains.kotlin.kapt").version("$kotlinVersion")
   id("com.diffplug.spotless").version("5.1.0")
 }
 
