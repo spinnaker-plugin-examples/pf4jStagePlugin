@@ -19,7 +19,6 @@ package io.armory.plugin.stage.wait.random
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.netflix.spinnaker.kork.plugins.internal.PluginJar
-import com.netflix.spinnaker.orca.StageResolver
 import com.netflix.spinnaker.orca.api.test.OrcaFixture
 import java.io.File
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,9 +32,6 @@ import org.springframework.test.web.servlet.MockMvc
 ])
 @AutoConfigureMockMvc
 class OrcaPluginsFixture : OrcaFixture() {
-
-  @Autowired
-  lateinit var stageResolver: StageResolver
 
   @Autowired
   lateinit var mockMvc: MockMvc
@@ -53,7 +49,7 @@ class OrcaPluginsFixture : OrcaFixture() {
       .pluginClass(RandomWaitPlugin::class.java.name)
       .pluginVersion("1.0.0")
       .manifestAttribute("Plugin-Requires", "orca>=0.0.0")
-      .extensions(mutableListOf(RandomWaitStage::class.java.name, RandomWaitStage.RandomWaitTask::class.java.name))
+      .extensions(mutableListOf(RandomWaitStage::class.java.name, RandomWaitTask::class.java.name))
       .build()
   }
 }

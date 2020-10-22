@@ -1,18 +1,13 @@
 package io.armory.plugin.stage.wait.random
 
-import com.netflix.spinnaker.kork.plugins.api.PluginSdks
-import com.netflix.spinnaker.orca.api.pipeline.Task
-import com.netflix.spinnaker.orca.api.pipeline.TaskResult
 import com.netflix.spinnaker.orca.api.pipeline.graph.StageDefinitionBuilder
 import com.netflix.spinnaker.orca.api.pipeline.graph.TaskNode
-import com.netflix.spinnaker.orca.api.pipeline.models.ExecutionStatus
 import com.netflix.spinnaker.orca.api.pipeline.models.StageExecution
+import java.util.*
 import org.pf4j.Extension
 import org.pf4j.Plugin
 import org.pf4j.PluginWrapper
 import org.slf4j.LoggerFactory
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
   private val logger = LoggerFactory.getLogger(RandomWaitPlugin::class.java)
@@ -45,5 +40,4 @@ class RandomWaitStage : StageDefinitionBuilder {
   override fun taskGraph(stage: StageExecution, builder: TaskNode.Builder) {
     builder.withTask("randomWait", RandomWaitTask::class.java)
   }
-
 }

@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+    }
+}
+apply plugin: "io.spinnaker.plugin.service-extension"
+apply plugin: "maven-publish"
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'kotlin-kapt'
+
+// don't have to update to Java 11, JVM is backwards compatible
+// if we do update, then this will break backwards compatibility, eg if we want new features
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
+
+    // Used for testing against the Google product releases.
+    maven { url "https://spinnaker-releases.bintray.com/jars" }
+}
+
+spinnakerPlugin {
+    serviceName = "echo"
+    pluginClass = "io.armory.plugin.stage.wait.RandomWaitPlugin"
+    requires="echo>=0.0.0"
+}
+
+dependencies {
+    // compileOnly is used here to not pull the dependencies into the plugin, these are already provided by the service itself
+    // This helps with backwards compatibility
+    // if a service doesn't contain the dependency, then you need to pull it in as implentation, as long as there are no conflicts
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    compileOnly (group: 'org.springframework', name: 'spring-context', version: '5.2.1.RELEASE')
+    compileOnly (group: 'com.netflix.spinnaker.kork', name: 'kork-plugins-spring-api', version: "${korkVersion}")
+    compileOnly (group: 'org.springframework', name: 'spring-web', version: '5.2.2.RELEASE')
+    compileOnly (group: 'com.netflix.spinnaker.echo', name: 'echo-core', version: "${echoVersion}")
+
+
+    testImplementation (group: 'com.netflix.spinnaker.echo', name: 'echo-core', version: "${echoVersion}")
+    testImplementation (group: 'com.netflix.spinnaker.kork', name: 'kork-plugins-spring-api', version: "${korkVersion}")
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
+    testImplementation "io.strikt:strikt-core:0.22.1"
+    testImplementation "dev.minutest:minutest:1.10.0"
+    testImplementation "io.mockk:mockk:1.9.3"
+
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.4.0"
+    testRuntime "org.junit.platform:junit-platform-launcher:1.4.0"
+    testRuntime "org.junit.platform:junit-platform-commons:1.5.2"
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+

@@ -8,11 +8,10 @@ import com.netflix.spinnaker.orca.api.pipeline.Task
 import com.netflix.spinnaker.orca.api.pipeline.TaskResult
 import com.netflix.spinnaker.orca.api.pipeline.models.ExecutionStatus
 import com.netflix.spinnaker.orca.api.pipeline.models.StageExecution
-import org.pf4j.Extension
-import org.slf4j.LoggerFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
-
+import org.pf4j.Extension
+import org.slf4j.LoggerFactory
 
 @Extension
 @Task.Aliases("io.armory.plugin.stage.wait.random.RandomWaitStage\$RandomWaitTask")
@@ -33,6 +32,7 @@ class RandomWaitTask(pluginSdks: PluginSdks, private val config: RandomWaitConfi
         val echo = pluginSdks.http().getInternalService("echo")
         val request = Request("getEchoRequest", "/pubsub/subscriptions")
         val response = echo.get(request)
+        val subscriptionList = response.body.bufferedReader().readLines()
 
         try {
             TimeUnit.SECONDS.sleep(timeToWait.toLong())
@@ -45,7 +45,10 @@ class RandomWaitTask(pluginSdks: PluginSdks, private val config: RandomWaitConfi
                         "maxWaitTime" to maxWaitTime,
                         "echo" to echo
                 ))
-                .outputs(mutableMapOf("timeToWait" to timeToWait))
+                .outputs(mutableMapOf(
+                        "timeToWait" to timeToWait,
+                        "subscriptionList" to subscriptionList
+                ))
                 .build()
     }
 }

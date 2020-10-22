@@ -1,9 +1,11 @@
 buildscript {
+  ext.kotlin_version = '1.4.10'
   repositories {
     mavenCentral()
   }
   dependencies {
     classpath "org.yaml:snakeyaml:1.19"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
@@ -12,6 +14,7 @@ plugins {
   id("com.palantir.git-version").version("0.12.2")
   id("com.diffplug.spotless").version("5.1.0")
 }
+apply plugin: 'kotlin'
 
 repositories {
   mavenCentral()
@@ -22,14 +25,6 @@ spinnakerBundle {
   description = "An example of a PF4J-based plugin that provides a custom pipeline stage."
   provider = "https://github.com/spinnaker-plugin-examples"
   version = rootProject.version
-  compatibility {
-    spinnaker {
-      test "1.21.4"
-      test "1.22.0"
-      test "latest"
-      test(version: "nightly", required: false)
-    }
-  }
 }
 
 version = normalizedVersion()
@@ -49,6 +44,19 @@ subprojects {
         ])
       }
     }
+  }
+}
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+compileKotlin {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}
+compileTestKotlin {
+  kotlinOptions {
+    jvmTarget = "1.8"
   }
 }
 

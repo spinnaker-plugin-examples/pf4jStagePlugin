@@ -11,7 +11,7 @@ buildscript {
 }
 
 apply plugin: "io.spinnaker.plugin.service-extension"
-apply plugin: "io.spinnaker.plugin.compatibility-test-runner"
+//apply plugin: "io.spinnaker.plugin.compatibility-test-runner"
 apply plugin: "maven-publish"
 apply plugin: "kotlin"
 apply plugin: "kotlin-kapt"
