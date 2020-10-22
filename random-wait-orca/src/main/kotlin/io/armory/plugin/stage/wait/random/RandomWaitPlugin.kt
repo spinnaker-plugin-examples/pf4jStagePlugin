@@ -46,6 +46,7 @@ class RandomWaitStage : StageDefinitionBuilder {
   }
 
   @Extension
+  @Task.Aliases("io.armory.plugin.stage.wait.random.RandomWaitStage\$RandomWaitTask")
   class RandomWaitTask(private val config: RandomWaitConfig) : Task {
 
     private val log = LoggerFactory.getLogger(RandomWaitTask::class.java)
