@@ -42,6 +42,12 @@ To debug the `random-wait-orca`  server component inside a Spinnaker service (li
 
 1) Run `./gradlew releaseBundle` in the plugin project.
 2) Copy the generated `.plugin-ref` file under `build` in the plugin project submodule for the service to the `plugins` directory under root in the Spinnaker service that will use the plugin .
+  Example Command:
+  ```
+  # This assumes the orca git repo is in ../orca
+  mkdir ../orca/plugins
+  cp random-wait-orca/build/Armory.RandomWaitPlugin-orca.plugin-ref ../orca/plugins/
+  ```
 3) Link the plugin project to the service project in IntelliJ (from the service project use the `+` button in the Gradle tab and select the plugin build.gradle).
 4) Configure the Spinnaker service the same way specified above.
 5) Create a new IntelliJ run configuration for the service that has the VM option `-Dpf4j.mode=development` and does a `Build Project` before launch.
