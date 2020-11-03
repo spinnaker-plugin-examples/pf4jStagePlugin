@@ -32,8 +32,6 @@ class RandomWaitPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
 @Extension
 class RandomWaitStage : StageDefinitionBuilder {
 
-  private val log = LoggerFactory.getLogger(RandomWaitStage::class.java)
-
   /**
    * This function describes the sequence of substeps, or "tasks" that comprise this
    * stage. The task graph is generally linear though there are some looping mechanisms.
@@ -44,31 +42,31 @@ class RandomWaitStage : StageDefinitionBuilder {
   override fun taskGraph(stage: StageExecution, builder: TaskNode.Builder) {
     builder.withTask("randomWait", RandomWaitTask::class.java)
   }
+}
 
-  @Extension
-  class RandomWaitTask(private val config: RandomWaitConfig) : Task {
+@Extension
+class RandomWaitTask(private val config: RandomWaitConfig) : Task {
 
-    private val log = LoggerFactory.getLogger(RandomWaitTask::class.java)
+  private val log = LoggerFactory.getLogger(RandomWaitTask::class.java)
 
-    /**
-     * This method is called when the task is executed.
-     */
-    override fun execute(stage: StageExecution): TaskResult {
-      val context = stage.mapTo(RandomWaitContext::class.java)
-      val rand = Random()
-      val maxWaitTime = context.maxWaitTime ?: config.defaultMaxWaitTime
-      val timeToWait = rand.nextInt(maxWaitTime)
+  /**
+   * This method is called when the task is executed.
+   */
+  override fun execute(stage: StageExecution): TaskResult {
+    val context = stage.mapTo(RandomWaitContext::class.java)
+    val rand = Random()
+    val maxWaitTime = context.maxWaitTime ?: config.defaultMaxWaitTime
+    val timeToWait = rand.nextInt(maxWaitTime)
 
-      try {
-        TimeUnit.SECONDS.sleep(timeToWait.toLong())
-      } catch (e: Exception) {
-        log.error("{}", e)
-      }
+    try {
+      TimeUnit.SECONDS.sleep(timeToWait.toLong())
+    } catch (e: Exception) {
+      log.error("{}", e)
+    }
 
-      return TaskResult.builder(ExecutionStatus.SUCCEEDED)
+    return TaskResult.builder(ExecutionStatus.SUCCEEDED)
         .context(mutableMapOf("maxWaitTime" to maxWaitTime))
         .outputs(mutableMapOf("timeToWait" to timeToWait))
         .build()
-    }
   }
 }

@@ -20,7 +20,7 @@ class RandomWaitStageTest : JUnit5Minutests {
         )
       }
 
-      val task = RandomWaitStage.RandomWaitTask(RandomWaitConfig(0))
+      val task = RandomWaitTask(RandomWaitConfig(0))
       expectThat(task.execute(stage)) {
         get { status }.isEqualTo(ExecutionStatus.SUCCEEDED)
         get { context["maxWaitTime"] }.isNotNull().isEqualTo(1)
