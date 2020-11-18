@@ -1,0 +1,40 @@
+name: Update Dependencies
+
+on:
+  repository_dispatch:
+    types: UpdateDependencies
+
+jobs:
+  update_dependencies:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo event
+        run: |
+          echo "${{ toJson(github.event.client_payload) }}"
+      - name: checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.branchName }}
+      - name: update versions
+        if: github.event.client_payload.hasDependencyUpdates == true
+        run: |
+          find . -type f -name "*.gradle" -exec sed -i -e 's,"http://dl.bintray.com/spinnaker/spinnaker/","https://spinnaker-releases.bintray.com/jars",' {} \;
+          echo "${{ github.event.client_payload.newGradleProperties }}" > gradle.properties
+      - name: Create Pull Request
+        if: github.event.client_payload.hasDependencyUpdates == true
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.TOKEN }}
+          commit-message: "update dependencies to platform version ${{ github.event.client_payload.platformVersion }}"
+          branch: ${{ github.event.client_payload.platformVersion }}
+          branch-suffix: timestamp
+          title: "Update dependencies to platform version ${{ github.event.client_payload.platformVersion }}"
+          body: |
+            Event
+            ```
+            ${{ toJson(github.event.client_payload) }}
+            ```
+          labels: |
+            updateDeps
+            autoMerge

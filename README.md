@@ -1,7 +1,4 @@
 ![CI](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin/workflows/CI/badge.svg)
-![Latest Kork](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin/workflows/Latest%20Kork/badge.svg?branch=master)
-![Latest Orca](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin/workflows/Latest%20Orca/badge.svg?branch=master)
-
 
 The [pf4jStagePlugin](https://github.com/spinnaker-plugin-examples/pf4jStagePlugin), also called the RandomWait plugin, creates a custom pipeline stage that waits a random number of seconds before signaling success.
 
