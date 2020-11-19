@@ -23,7 +23,7 @@ targetCompatibility = 1.8
 repositories {
   mavenCentral()
   jcenter()
-  maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
+  maven { url "https://spinnaker-releases.bintray.com/jars" }
 
   // Used for testing against the Google product releases.
   maven { url "https://spinnaker-releases.bintray.com/jars" }
@@ -63,7 +63,7 @@ dependencies {
 compileTestKotlin {
   kotlinOptions {
     languageVersion = "1.3"
-    jvmTarget = "1.8"
+    jvmTarget = "11"
   }
 }
 
