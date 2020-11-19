@@ -10,7 +10,6 @@ buildscript {
 }
 
 apply plugin: "io.spinnaker.plugin.service-extension"
-apply plugin: "io.spinnaker.plugin.compatibility-test-runner"
 apply plugin: "maven-publish"
 apply plugin: "kotlin"
 apply plugin: "kotlin-kapt"
@@ -22,7 +21,7 @@ targetCompatibility = 1.8
 repositories {
   mavenCentral()
   jcenter()
-  maven { url "http://dl.bintray.com/spinnaker/spinnaker/" }
+  maven { url "https://spinnaker-releases.bintray.com/jars" }
 
   // Used for testing against the Google product releases.
   maven { url "https://spinnaker-releases.bintray.com/jars" }
@@ -62,7 +61,7 @@ dependencies {
 compileTestKotlin {
   kotlinOptions {
     languageVersion = "1.3"
-    jvmTarget = "1.8"
+    jvmTarget = "11"
   }
 }
 
