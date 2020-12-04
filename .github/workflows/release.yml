@@ -19,7 +19,7 @@ jobs:
           java-version: 11
 
       - name: run tests
-        run: ./gradlew test compatibilityTest
+        run: ./gradlew test
 
       - name: build
         run: ./gradlew releaseBundle
