@@ -2,9 +2,6 @@ buildscript {
   repositories {
     mavenCentral()
   }
-  dependencies {
-    classpath "org.yaml:snakeyaml:1.19"
-  }
 }
 
 plugins {
@@ -22,14 +19,6 @@ spinnakerBundle {
   description = "An example of a PF4J-based plugin that provides a custom pipeline stage."
   provider = "https://github.com/spinnaker-plugin-examples"
   version = rootProject.version
-  compatibility {
-    spinnaker {
-      test "1.21.4"
-      test "1.22.0"
-      test "latest"
-      test(version: "nightly", required: false)
-    }
-  }
 }
 
 version = normalizedVersion()
