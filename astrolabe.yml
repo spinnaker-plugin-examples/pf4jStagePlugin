@@ -1,0 +1,8 @@
+plugin:
+  id: Armory.RandomWaitPlugin
+  name: Armory Random Wait Example Plugin
+  testCompatibility: true
+  manageDependencies: true
+  metadata:
+    org: spinnaker-plugin-examples
+    repo: examplePluginRepository
