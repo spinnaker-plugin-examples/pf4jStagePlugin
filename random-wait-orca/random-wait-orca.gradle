@@ -16,37 +16,42 @@ apply plugin: "kotlin"
 apply plugin: "kotlin-kapt"
 apply plugin: "kotlin-spring"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
   mavenCentral()
-  jcenter()
-  maven { url "https://spinnaker-releases.bintray.com/jars" }
+  maven {
+        url 'https://armory.jfrog.io/armory/gradle-dev-local/'
+        credentials {
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+        }
+    }
 }
 
 spinnakerPlugin {
   serviceName = "orca"
   pluginClass = "io.armory.plugin.stage.wait.random.RandomWaitPlugin"
-  requires="orca>=0.0.0"
 }
 
 dependencies {
   compileOnly "org.pf4j:pf4j:${pf4jVersion}"
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-  compileOnly "com.netflix.spinnaker.kork:kork-plugins-api:${korkVersion}"
-  compileOnly "com.netflix.spinnaker.orca:orca-api:${orcaVersion}"
+  compileOnly "io.spinnaker.kork:kork-plugins-api:${korkVersion}"
+  compileOnly "io.spinnaker.kork:kork-artifacts:${korkVersion}"
+  compileOnly "io.spinnaker.orca:orca-api:${orcaVersion}"
   kapt "org.pf4j:pf4j:${pf4jVersion}"
 
-  testImplementation(platform("com.netflix.spinnaker.orca:orca-bom:${orcaVersion}"))
-  testImplementation "com.netflix.spinnaker.orca:orca-api"
-  testImplementation "com.netflix.spinnaker.orca:orca-api-tck"
-  testImplementation "com.netflix.spinnaker.orca:orca-queue"
-  testImplementation "com.netflix.spinnaker.kork:kork-plugins-tck"
+  testImplementation(platform("io.spinnaker.orca:orca-bom:${orcaVersion}"))
+  testImplementation "io.spinnaker.orca:orca-api"
+  testImplementation "io.spinnaker.orca:orca-api-tck"
+  testImplementation "io.spinnaker.orca:orca-queue"
+  testImplementation "io.spinnaker.kork:kork-plugins-tck"
 
   testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
   testImplementation "io.strikt:strikt-core:0.22.1"
-  testImplementation "dev.minutest:minutest:1.10.0"
+  testImplementation "dev.minutest:minutest:1.13.0"
   testImplementation "io.mockk:mockk:1.9.3"
   testImplementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.11.1"
   testImplementation "javax.servlet:javax.servlet-api:4.0.1"

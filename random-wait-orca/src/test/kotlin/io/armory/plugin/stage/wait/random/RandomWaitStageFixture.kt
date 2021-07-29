@@ -52,7 +52,6 @@ class OrcaPluginsFixture : OrcaFixture() {
     PluginJar.Builder(plugins.toPath().resolve("$pluginId.jar"), pluginId)
       .pluginClass(RandomWaitPlugin::class.java.name)
       .pluginVersion("1.0.0")
-      .manifestAttribute("Plugin-Requires", "orca>=0.0.0")
       .extensions(mutableListOf(RandomWaitStage::class.java.name, RandomWaitTask::class.java.name))
       .build()
   }
