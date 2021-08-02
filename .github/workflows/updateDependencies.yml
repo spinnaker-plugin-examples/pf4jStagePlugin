@@ -8,6 +8,8 @@ jobs:
   update_dependencies:
     name: Update Dependencies
     runs-on: ubuntu-latest
+    env:
+      GRADLE_ARGS: -Partifactory_user=${{secrets.ARTIFACTORY_USER}} -Partifactory_password=${{secrets.ARTIFACTORY_TOKEN}}
     steps:
       - name: echo event
         run: |

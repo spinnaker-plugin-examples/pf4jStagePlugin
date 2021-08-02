@@ -9,6 +9,8 @@ jobs:
   build:
     name: Release Plugin
     runs-on: ubuntu-latest
+    env:
+      GRADLE_ARGS: -Partifactory_user=${{secrets.ARTIFACTORY_USER}} -Partifactory_password=${{secrets.ARTIFACTORY_TOKEN}}
     steps:
       - name: checkout code
         uses: actions/checkout@v2
