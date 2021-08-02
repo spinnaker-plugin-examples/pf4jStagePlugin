@@ -21,10 +21,10 @@ jobs:
           java-version: 11
 
       - name: run tests
-        run: ./gradlew test
+        run: ./gradlew test --info $GRADLE_ARGS
 
       - name: build
-        run: ./gradlew releaseBundle
+        run: ./gradlew releaseBundle $GRADLE_ARGS
 
       - name: get project info
         id: get_project_info

@@ -6,8 +6,6 @@ on:
 
 jobs:
   update_dependencies:
-    env:
-      GRADLE_ARGS: -Partifactory_user=${{secrets.ARTIFACTORY_USER}} -Partifactory_password=${{secrets.ARTIFACTORY_TOKEN}}
     name: Update Dependencies
     runs-on: ubuntu-latest
     steps:
