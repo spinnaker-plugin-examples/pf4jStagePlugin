@@ -26,9 +26,3 @@ jobs:
           service: ${{ github.event.client_payload.service }}
           version: ${{ github.event.client_payload.version }}
           plugin_sha: ${{ github.event.client_payload.sha }}
-      - name: handle missing fingerprint
-        uses: technote-space/workflow-conclusion-action@v2
-        if: ${{ steps.run_tests.outputs.TEST_OUTCOME }} == 'noFingerprint'
-        with:
-          status: action_required
-
