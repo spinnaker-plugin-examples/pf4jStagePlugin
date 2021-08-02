@@ -28,6 +28,8 @@ jobs:
           plugin_sha: ${{ github.event.client_payload.sha }}
       - name: handle missing fingerprint
         if: ${{ steps.run_tests.outputs.TEST_OUTCOME }} == 'noFingerprint'
+        run: |
+          echo "${{ steps.run_tests.outputs.TEST_OUTCOME }}"
         with:
           status: action_required
 
