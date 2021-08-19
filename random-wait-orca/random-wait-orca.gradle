@@ -22,6 +22,9 @@ targetCompatibility = 11
 repositories {
   mavenCentral()
   maven {
+    url 'https://repo.spring.io/libs-release/'
+  }
+  maven {
         url 'https://armory.jfrog.io/armory/gradle-dev-local/'
         credentials {
             username = "${artifactory_user}"
@@ -50,7 +53,7 @@ dependencies {
   testImplementation "io.spinnaker.kork:kork-plugins-tck"
 
   testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
-  testImplementation "io.strikt:strikt-core:0.22.1"
+  testImplementation "io.strikt:strikt-core:0.31.0"
   testImplementation "dev.minutest:minutest:1.13.0"
   testImplementation "io.mockk:mockk:1.9.3"
   testImplementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.11.1"
