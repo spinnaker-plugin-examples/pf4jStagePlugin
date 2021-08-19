@@ -22,9 +22,6 @@ targetCompatibility = 11
 repositories {
   mavenCentral()
   maven {
-    url 'https://repo.spring.io/libs-release/'
-  }
-  maven {
         url 'https://armory.jfrog.io/armory/gradle-dev-local/'
         credentials {
             username = "${artifactory_user}"
