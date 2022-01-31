@@ -85,15 +85,3 @@ jobs:
       - name: add release to plugin repo
         run: |
           curl -XPOST -u "${{ secrets.USERNAME }}:${{ secrets.TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/spinnaker-plugin-examples/examplePluginRepository/dispatches --data "{\"event_type\": \"onPluginRelease\", \"client_payload\": {\"org\": \"spinnaker-plugin-examples\", \"repo\": \"${{ steps.get_project_info.outputs.PROJECT }}\", \"released\": $(cat build/distributions/plugin-info.json)}}"
-
-      - name: setup gcloud
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          project_id: cloud-armory
-          service_account_key: ${{ secrets.GCP_KEY }}
-          export_default_credentials: true
-
-      - name: push image to registry
-        run: |
-          gcloud auth configure-docker -q
-          docker push gcr.io/cloud-armory/${{ steps.get_project_info.outputs.PROJECT_KEBAB }}:${{ steps.get_project_info.outputs.VERSION }}
