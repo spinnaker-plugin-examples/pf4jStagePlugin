@@ -1,11 +1,3 @@
-pluginManagement {
-  repositories {
-    mavenLocal()
-    maven { url "https://dl.bintray.com/spinnaker/gradle/" }
-    gradlePluginPortal()
-  }
-}
-
 rootProject.name = "pf4jStagePlugin"
 
 include "random-wait-orca", "random-wait-deck"
