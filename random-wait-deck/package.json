@@ -17,7 +17,7 @@
     "@uirouter/react": "1.0.2",
     "bufferutil": "4.0.1",
     "husky": "4.2.5",
-    "lodash-es": "4.17.15",
+    "lodash-es": "4.17.21",
     "pretty-quick": "2.0.1",
     "prop-types": "15.6.1",
     "react": "16.8.6",
