@@ -9,7 +9,7 @@ This is for demo only and not meant to be used in a production environment.
 | Plugin  | Spinnaker Platform |
 |:----------- | :--------- |
 | 1.0.x  |  1.19.x |
-| 1.1.x  | 1.20.x |
+| 1.1.14  | 1.20.6, 1.21.0 |
 
 # Usage
 
